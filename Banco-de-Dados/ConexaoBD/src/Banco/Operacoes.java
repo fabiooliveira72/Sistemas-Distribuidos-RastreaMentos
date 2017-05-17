@@ -151,7 +151,6 @@ public class Operacoes {
           Posicao posicao = new Posicao();
 
           posicao.setVeiculo(veiculo);
-          posicao.setSeq(rs.getInt("seq"));
           posicao.setDatahora(rs.getTimestamp("datahora"));
           posicao.setLatitude(rs.getFloat("latitude"));
           posicao.setLatitude(rs.getFloat("longitude"));

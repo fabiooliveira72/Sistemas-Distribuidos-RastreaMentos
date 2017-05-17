@@ -215,16 +215,12 @@ public class Testes extends Operacoes{
             */
        
         
-     /*
+   /*
             
         Veiculo veiculo = new Veiculo();
-
+           
         veiculo.setCodigo(1);
-        veiculo.setPlaca("ILH1124");
-        veiculo.setTipo(1);
-        veiculo.setCapacidade(1);
-        veiculo.setUnpac("unpac");
-
+        
         Posicao posicao = new Posicao();
    
         posicao.setDatahora(new Date());
@@ -242,7 +238,7 @@ public class Testes extends Operacoes{
             System.out.println("ERRO AO INCLUIR...");
         }
            
-         */
+     */ 
      
        /*LISTA CARROS ANO/MODELO......
             List<Carro> lista = new ArrayList();
@@ -266,7 +262,7 @@ public class Testes extends Operacoes{
             
         // Listar posições de um veículo
         
-        /*
+       /*
          
             List<Posicao> lista = new ArrayList();
             
@@ -279,7 +275,7 @@ public class Testes extends Operacoes{
                 System.out.println("TAMANHO DA LISTA: " + lista.size());
                 
                 for(int i=0; i<lista.size(); i++){
-                    System.out.println("Código: " + lista.get(i).getSeq());
+                    System.out.println("Código: " + lista.get(i).getVeiculo());
                 }
             
             } catch (SQLException ex) {
@@ -287,7 +283,7 @@ public class Testes extends Operacoes{
             System.out.println("NAO ACHOU NADA COM ESSE ANO E MODELO!!");
             }
           
-      */
+    */
      
     }
 }

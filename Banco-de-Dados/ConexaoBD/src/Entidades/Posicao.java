@@ -13,8 +13,7 @@ import java.util.Date;
  * @author eduardo
  */
 public class Posicao implements Serializable{
-    
-    private Integer seq;
+   
     private Date datahora;
     private Float latitude;
     private Float longitude;
@@ -23,22 +22,13 @@ public class Posicao implements Serializable{
     public Posicao() {
     }
 
-    public Posicao(Integer seq, Date datahora, Float latitude, Float longitude, Veiculo veiculo) {
-        this.seq = seq;
+    public Posicao(Date datahora, Float latitude, Float longitude, Veiculo veiculo) {
+
         this.datahora = datahora;
         this.latitude = latitude;
         this.longitude = longitude;
         this.veiculo = veiculo;
     }
-
-    public Integer getSeq() {
-        return seq;
-    }
-
-    public void setSeq(Integer seq) {
-        this.seq = seq;
-    }
-
 
     public Date getDatahora() {
         return datahora;
@@ -74,7 +64,7 @@ public class Posicao implements Serializable{
 
     @Override
     public String toString() {
-        return "Posicao{" + "seq=" + seq + ", datahora=" + datahora + ", latitude=" + latitude + ", longitude=" + longitude + ", veiculo=" + veiculo + '}';
+        return "Posicao{" +  ", datahora=" + datahora + ", latitude=" + latitude + ", longitude=" + longitude + ", veiculo=" + veiculo + '}';
     }
     
     

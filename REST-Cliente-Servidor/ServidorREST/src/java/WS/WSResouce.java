@@ -1,7 +1,6 @@
 package WS;
 
 
-
 import Banco.Operacoes;
 import Entidades.Posicao;
 import Entidades.Veiculo;

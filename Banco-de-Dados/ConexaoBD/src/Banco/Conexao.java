@@ -20,7 +20,7 @@ public class Conexao {
     static String url = "jdbc:postgresql://localhost/sd_rastreamentos_database";
     static String driver = "org.postgresql.Driver";
     static String usuario = "postgres";
-    static String senha = "COLOQUE A SENHA AQUI";
+    static String senha = "postgres";
 
     static Connection con = null;
 

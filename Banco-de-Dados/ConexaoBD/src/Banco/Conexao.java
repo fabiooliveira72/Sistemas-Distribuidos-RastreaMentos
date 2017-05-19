@@ -17,10 +17,10 @@ import java.sql.Statement;
  */
 public class Conexao {
 
-    static String url = "jdbc:postgresql://localhost/sd_rastreamentos_database";
+    static String url = "jdbc:postgresql://amazon.kressin.com.br/sd_rastreamentos_database";
     static String driver = "org.postgresql.Driver";
     static String usuario = "postgres";
-    static String senha = "postgres";
+    static String senha = "@Sd!()$2@!7";
 
     static Connection con = null;
 

@@ -9,11 +9,11 @@ import simulador.object.SimuladorObject;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import static java.lang.Thread.sleep;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -26,7 +26,7 @@ public class ClienteSimuladorUDP {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         // TODO code application logic here
         GregorianCalendar c = new GregorianCalendar() ;
         Date dt = c.getTime();
@@ -45,7 +45,7 @@ public class ClienteSimuladorUDP {
             oos.flush();
             byte[] data = baos.toByteArray();
             
-            
+            sleep(5000);
             //SEND REQUEST
             aSocket = new DatagramSocket();
             InetAddress aHost = InetAddress.getByName("localhost");

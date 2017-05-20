@@ -18,12 +18,18 @@ public class SimuladorObject implements Serializable{
     private Date dataHora;
     private Float lat;
     private Float lon;
+    private Integer sendRequest;
 
-    public SimuladorObject(Integer codigo, Date dataHora, Float lat, Float lon) {
+    public SimuladorObject() {
+    }
+
+    
+    public SimuladorObject(Integer codigo, Date dataHora, Float lat, Float lon, Integer sendRequest) {
         this.codigo = codigo;
         this.dataHora = dataHora;
         this.lat = lat;
         this.lon = lon;
+        this.sendRequest = sendRequest;
     }
 
     public Float getLon() {
@@ -56,6 +62,14 @@ public class SimuladorObject implements Serializable{
 
     public void setLat(Float lat) {
         this.lat = lat;
+    }
+
+    public Integer getSendRequest() {
+        return sendRequest;
+    }
+
+    public void setSendRequest(Integer sendRequest) {
+        this.sendRequest = sendRequest;
     }
     
     

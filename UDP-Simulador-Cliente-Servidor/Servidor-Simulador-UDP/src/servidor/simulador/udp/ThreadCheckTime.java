@@ -33,10 +33,8 @@ public class ThreadCheckTime extends Thread{
                 
                 interval = (currentTime - connectedVehicle.get(valor));
                 if(interval > timewait){
-                System.out.println(currentTime + " - "+ connectedVehicle.get(valor));
-                System.out.println(interval + " > "+ timewait);
                     System.out.println("Veiculo codigo = "+ valor + " esta fora da area de cobertura");
-                    
+                    connectedVehicle.remove(valor);
                 }
                 
             }

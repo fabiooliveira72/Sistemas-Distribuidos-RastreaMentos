@@ -24,6 +24,9 @@ public class ClienteSimuladorUDP {
     
     public static void main(String[] args) throws SocketException, InterruptedException {
         // TODO code application logic here
+        // cod YYY-MM-DD-HH-MM-SS LAT LON INTERVAL
+        // 1 2017-05-20-01-20-50 -1.1 -1.1 5 2 2017-07-19-13-31-50 -2.2 -2.2 5 3 2017-10-19-13-31-50 -3.3 -3.3 5
+        
         List<String> lsArgs = new ArrayList<>();
         lsArgs.addAll(Arrays.asList(args));
         

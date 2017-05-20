@@ -58,9 +58,9 @@ public class ThreadServerRequest extends Thread{
                 //Operacoes.adicionaPosicao(new Posicao(so.getDataHora(), so.getLat(), so.getLon(),v));
                 
                 
-                DatagramPacket reply = new DatagramPacket(clientPacket.getData(), clientPacket.getLength(), 
-                                                          clientPacket.getAddress(), clientPacket.getPort());
-                clientSocket.send(reply);
+//                DatagramPacket reply = new DatagramPacket(clientPacket.getData(), clientPacket.getLength(), 
+//                                                          clientPacket.getAddress(), clientPacket.getPort());
+//                clientSocket.send(reply);
             
         } catch (SocketException se) {
             System.out.println(se.getMessage());

@@ -31,7 +31,19 @@ public class SimuladorObject implements Serializable{
         this.lon = lon;
         this.sendRequest = sendRequest;
     }
+    
+    public SimuladorObject(Integer codigo, Date dataHora, Float lat, Float lon) {
+        this.codigo = codigo;
+        this.dataHora = dataHora;
+        this.lat = lat;
+        this.lon = lon;
+    }
 
+    @Override
+    public String toString() {
+        return "SimuladorObject{" + "codigo=" + codigo + ", dataHora=" + dataHora + ", lat=" + lat + ", lon=" + lon +'}';
+    }
+    
     public Float getLon() {
         return lon;
     }

@@ -10,8 +10,6 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -51,7 +49,7 @@ public class ServidorSimuladorUDP {
                 connection.start();
             }      
                 
-        } catch (SocketException se){}
+        } catch (SocketException se){se.getMessage();}
         
     }
     

@@ -5,11 +5,7 @@
  */
 package cliente.simulador.udp;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -19,7 +15,6 @@ import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import simulador.object.SimuladorObject;
-import sun.util.calendar.Gregorian;
 
 /**
  *
@@ -70,33 +65,31 @@ public class ThreadClientRequest extends Thread{
             //SEARIALIZE
                 randLatLong();
                 so.setDataHora(new Date());
-                System.out.println("Client send object= "+so.getCodigo()+ " "+ so.getDataHora()+ " "+ so.getLat() + " "+so.getLon());
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                ObjectOutputStream oos = new ObjectOutputStream(baos);
-                oos.writeObject(so);
-                oos.flush();
-                byte[] data = baos.toByteArray();
+                gc.setTime(so.getDataHora());
+                
+                String dt = so.getCodigo()+"#"+gc.get(1)+"#"+(gc.get(2)+1)+"#"+ gc.get(3)+"#"+gc.get(11)+"#"+ gc.get(12)+ "#"+gc.get(13)+"#"+
+                        so.getLat()+"#"+so.getLon();
+                byte[] data = dt.getBytes();
+                
                 
             //SEND REQUEST
                 aSocket = new DatagramSocket();
                 InetAddress aHost = InetAddress.getByName(address);
                 DatagramPacket request = new DatagramPacket(data, data.length, aHost, serverPort);
                 aSocket.send(request);
+                System.out.println("Client send request -> "+ so.toString()+ " from -> "+request.getAddress() + " port -> "+ request.getPort());
             
 //            //WAIT REPlY
 //                byte[] buffer = new byte[500];
 //                DatagramPacket reply = new DatagramPacket(buffer, buffer.length);
 //                aSocket.receive(reply);
-//                
-//                ByteArrayInputStream bais = new ByteArrayInputStream(buffer);
-//                ObjectInputStream os = new ObjectInputStream(bais);
-//                SimuladorObject s1 = (SimuladorObject) os.readObject();
            
                 sleep(so.getSendRequest()*1000);
             }
         } catch (SocketException soe) {
-        }catch(IOException ioe){
-            
+            soe.getMessage();
+        }catch(IOException ioe){   
+            ioe.getMessage();
         } catch (InterruptedException ex) {
             Logger.getLogger(ThreadClientRequest.class.getName()).log(Level.SEVERE, null, ex);
         }

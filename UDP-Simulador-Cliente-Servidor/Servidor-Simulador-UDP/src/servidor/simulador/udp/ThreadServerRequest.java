@@ -9,15 +9,9 @@ import Banco.Operacoes;
 import Entidades.Posicao;
 import Entidades.Veiculo;
 import simulador.object.SimuladorObject;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.net.SocketException;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.GregorianCalendar;
 import static servidor.simulador.udp.ServidorSimuladorUDP.connectedVehicle;
 
 /**
@@ -38,16 +32,20 @@ public class ThreadServerRequest extends Thread{
 
     public void run() {
         try {
-                //System.out.println("Thread Connection Run");
-                //DESERIALIZE
+            //SERVER REQUEST STRING -> COD#YYYY#MM#DD#HH#MM#SS#LAT#LONG#WAIT
+            
+                String requestReceive = new String(clientPacket.getData()).trim();
                 
-                ByteArrayInputStream bais = new ByteArrayInputStream(buffer);
-                ObjectInputStream oos = new ObjectInputStream(bais);
-                SimuladorObject so = (SimuladorObject) oos.readObject();
-                oos.close();
+                String[] parts = requestReceive.split("#");
                 
-                System.out.println("Servidor receive object = "+so.getCodigo()+ " "+ so.getDataHora()+ " "+ so.getLat() + " "+so.getLon());
-                System.out.println(clientPacket.getAddress()+ " # " + clientPacket.getPort());
+                GregorianCalendar c = new GregorianCalendar(Integer.parseInt(parts[1]), Integer.parseInt(parts[2])-1, Integer.parseInt(parts[3]), 
+                Integer.parseInt(parts[4]), Integer.parseInt(parts[5]), Integer.parseInt(parts[6]));
+                
+                SimuladorObject so = new SimuladorObject(Integer.parseInt(parts[0]), c.getTime(), 
+                                                        Float.parseFloat(parts[7]), Float.parseFloat(parts[8]));
+                
+                System.out.println("Server Receive request -> "+ so.toString() + " from-> "+clientPacket.getAddress()+ " port ->" + clientPacket.getPort());
+                
                 
                 //CHECKTIME
                 connectedVehicle.put(so.getCodigo(), System.currentTimeMillis());
@@ -58,16 +56,12 @@ public class ThreadServerRequest extends Thread{
                 //Operacoes.adicionaPosicao(new Posicao(so.getDataHora(), so.getLat(), so.getLon(),v));
                 
                 
-//                DatagramPacket reply = new DatagramPacket(clientPacket.getData(), clientPacket.getLength(), 
-//                                                          clientPacket.getAddress(), clientPacket.getPort());
-//                clientSocket.send(reply);
+                DatagramPacket reply = new DatagramPacket(clientPacket.getData(), clientPacket.getLength(), 
+                                                          clientPacket.getAddress(), clientPacket.getPort());
+                clientSocket.send(reply);
             
-        } catch (SocketException se) {
-            System.out.println(se.getMessage());
-        } catch (IOException ioe){
+        } catch (Exception ioe){
             System.out.println(ioe.getMessage());
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ThreadServerRequest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }    
     

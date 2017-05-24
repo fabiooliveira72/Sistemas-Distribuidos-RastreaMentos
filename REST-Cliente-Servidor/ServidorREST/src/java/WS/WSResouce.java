@@ -7,9 +7,13 @@ package WS;
 
 import Banco.Conexao;
 import Banco.Operacoes;
+import Entidades.Posicao;
 import Entidades.Veiculo;
 import com.google.gson.Gson;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Consumes;
@@ -55,11 +59,26 @@ public class WSResouce {
 //TODO return proper representation object
         //throw new UnsupportedOperationException();   
     }
+        @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("WSRRastreamento/getListTypeVeiculo/{tipo}")
+    public String listTipoVeiculo(@PathParam("tipo") Integer tipo) throws SQLException {
+         List<Veiculo> lista = new ArrayList();
+        lista = Operacoes.listaTipo(tipo);
+        Gson g = new Gson();
+        return g.toJson(lista);
+    } 
     
-    /**
-     * PUT method for updating or creating an instance of WSResouce
-     * @param content representation for the resource
-     */
+        @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("WSRRastreamento/getListPosicao/{codigo}/{datahora}")
+     public String listTipoVeiculo(@PathParam("tipo") Integer tipo,Date datahora) throws SQLException {
+         List<Posicao> lista = new ArrayList();
+        lista = Operacoes.listaPosicaoVeiculo(tipo, datahora);
+        Gson g = new Gson();
+        return g.toJson(lista);
+    }
+    
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public void putJson(String content) {

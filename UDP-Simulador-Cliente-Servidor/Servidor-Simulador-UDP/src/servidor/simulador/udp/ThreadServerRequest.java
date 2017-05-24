@@ -23,6 +23,7 @@ public class ThreadServerRequest extends Thread{
     DatagramPacket clientPacket;
     DatagramSocket clientSocket;
     byte[] buffer = new byte[500];
+    String s = "ServidorSimuladorUDP";
     ThreadServerRequest(DatagramSocket clientSocket, DatagramPacket clientPacket, byte[] buffer) {
         this.buffer = buffer;
         this.clientPacket = clientPacket;
@@ -32,7 +33,7 @@ public class ThreadServerRequest extends Thread{
 
     public void run() {
         try {
-            //SERVER REQUEST STRING -> COD#YYYY#MM#DD#HH#MM#SS#LAT#LONG#WAIT
+            //SERVER REQUEST STRING -> COD#YYYY#MM#DD#HH#MM#SS#LAT#LONG
             
                 String requestReceive = new String(clientPacket.getData()).trim();
                 
@@ -44,8 +45,9 @@ public class ThreadServerRequest extends Thread{
                 SimuladorObject so = new SimuladorObject(Integer.parseInt(parts[0]), c.getTime(), 
                                                         Float.parseFloat(parts[7]), Float.parseFloat(parts[8]));
                 
-                System.out.println("Server Receive request -> "+ so.toString() + " from-> "+clientPacket.getAddress()+ " port ->" + clientPacket.getPort());
-                
+                String info = "Server Receive request -> "+ so.toString() + " from-> "+clientPacket.getAddress()+ " port ->" + clientPacket.getPort();
+                System.out.println(info);
+                LOG.Logs.LogMessage(info, s);
                 
                 //CHECKTIME
                 connectedVehicle.put(so.getCodigo(), System.currentTimeMillis());

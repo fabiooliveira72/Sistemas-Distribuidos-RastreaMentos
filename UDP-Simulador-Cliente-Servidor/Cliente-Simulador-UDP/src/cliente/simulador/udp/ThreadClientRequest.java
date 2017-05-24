@@ -67,8 +67,10 @@ public class ThreadClientRequest extends Thread{
                 so.setDataHora(new Date());
                 gc.setTime(so.getDataHora());
                 
-                String dt = so.getCodigo()+"#"+gc.get(1)+"#"+(gc.get(2)+1)+"#"+ gc.get(3)+"#"+gc.get(11)+"#"+ gc.get(12)+ "#"+gc.get(13)+"#"+
-                        so.getLat()+"#"+so.getLon();
+                String dt = so.getCodigo()+"#"+gc.get(GregorianCalendar.YEAR)+"#"+(gc.get(GregorianCalendar.MONTH)+1)+
+                            "#"+ gc.get(GregorianCalendar.DAY_OF_MONTH)+"#"+gc.get(GregorianCalendar.HOUR)+
+                            "#"+ gc.get(GregorianCalendar.MINUTE)+ "#"+gc.get(GregorianCalendar.SECOND)+
+                            "#"+so.getLat()+"#"+so.getLon();
                 byte[] data = dt.getBytes();
                 
                 

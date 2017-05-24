@@ -41,11 +41,11 @@ public class Operacoes {
     }
     
     // Método que exclui um veículo
-    public static void deletaVeiculo(Veiculo veiculo) throws SQLException {
+    public static void deletaVeiculo(Integer codigo) throws SQLException {
   
         String sql = "delete from veiculo where codigo = ?";
         PreparedStatement stmt = Conexao.getPreparedStatement(sql);
-        stmt.setInt(1, veiculo.getCodigo());
+        stmt.setInt(1, codigo);
         stmt.executeUpdate();
 
     }

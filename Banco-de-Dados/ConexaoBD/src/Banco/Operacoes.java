@@ -22,6 +22,19 @@ import java.util.List;
  */
 public class Operacoes {
     
+    //OPERAÇÕES REPLICAÇÃO
+    public static void beginReplica() throws SQLException{
+        String sql = "select f_conecta()";
+        PreparedStatement stmt = Conexao.getPreparedStatement(sql);
+        stmt.execute();
+    }
+    
+    
+    public static void endReplica() throws SQLException{
+        String sql = "select f_desconecta()";
+        PreparedStatement stmt = Conexao.getPreparedStatement(sql);
+        stmt.execute();
+    }
     
     // OPERAÇÔES VEÍCULO
     

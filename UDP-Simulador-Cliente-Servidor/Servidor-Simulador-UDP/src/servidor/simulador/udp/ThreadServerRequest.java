@@ -47,7 +47,7 @@ public class ThreadServerRequest extends Thread{
                 
                 String info = "Server Receive request -> "+ so.toString() + " from-> "+clientPacket.getAddress()+ " port ->" + clientPacket.getPort();
                 System.out.println(info);
-                LOG.Logs.LogMessage(info, s);
+                //LOG.Logs.LogMessage(info, s);
                 
                 //CHECKTIME
                 connectedVehicle.put(so.getCodigo(), System.currentTimeMillis());
@@ -55,12 +55,12 @@ public class ThreadServerRequest extends Thread{
                 //SAVE POSITION
                 Veiculo v = new Veiculo();
                 v.setCodigo(so.getCodigo());
-                //Operacoes.adicionaPosicao(new Posicao(so.getDataHora(), so.getLat(), so.getLon(),v));
+                Operacoes.adicionaPosicao(new Posicao(so.getDataHora(), so.getLat(), so.getLon(),v));
                 
                 
-                DatagramPacket reply = new DatagramPacket(clientPacket.getData(), clientPacket.getLength(), 
-                                                          clientPacket.getAddress(), clientPacket.getPort());
-                clientSocket.send(reply);
+//                DatagramPacket reply = new DatagramPacket(clientPacket.getData(), clientPacket.getLength(), 
+//                                                          clientPacket.getAddress(), clientPacket.getPort());
+//                clientSocket.send(reply);
             
         } catch (Exception ioe){
             System.out.println(ioe.getMessage());

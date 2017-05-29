@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="Banco-de-Dados/ConexaoBD/src"/>
+	<classpathentry kind="src" path="LOG/Logs/src"/>
+	<classpathentry kind="src" path="REST-Cliente-Servidor/ServidorREST/src/java"/>
+	<classpathentry kind="src" path="UDP-Simulador-Cliente-Servidor/Cliente-Simulador-UDP/src"/>
+	<classpathentry kind="src" path="UDP-Simulador-Cliente-Servidor/Servidor-Simulador-UDP/src"/>
+	<classpathentry kind="lib" path="Banco-de-Dados/postgresql-9.4-1200-jdbc41.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="Banco-de-Dados/ConexaoBD/build/classes"/>
+</classpath>

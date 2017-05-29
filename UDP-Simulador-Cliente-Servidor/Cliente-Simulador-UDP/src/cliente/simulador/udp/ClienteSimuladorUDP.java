@@ -31,7 +31,7 @@ public class ClienteSimuladorUDP {
         lsArgs.addAll(Arrays.asList(args));
         
         Integer serverPort = 2006;
-        String address = "ec2-35-161-25-226.us-west-2.compute.amazonaws.com";
+        String address = "localhost";
         
         if(args.length%5 == 0){
             

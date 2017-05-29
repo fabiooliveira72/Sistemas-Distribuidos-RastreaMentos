@@ -47,7 +47,7 @@ public class ThreadServerRequest extends Thread{
                 
                 String info = "Server Receive request -> "+ so.toString() + " from-> "+clientPacket.getAddress()+ " port ->" + clientPacket.getPort();
                 System.out.println(info);
-                //LOG.Logs.LogMessage(info, s);
+                LOG.Logs.LogMessage(info, s);
                 
                 //CHECKTIME
                 connectedVehicle.put(so.getCodigo(), System.currentTimeMillis());

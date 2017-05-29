@@ -5,6 +5,8 @@
  */
 package servidor.simulador.udp;
 
+import Banco.Conexao;
+import Banco.Operacoes;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -26,8 +28,8 @@ public class ServidorSimuladorUDP {
     
     public static void main(String[] args) throws ClassNotFoundException, IOException, InterruptedException, SQLException {
         // TODO code application logic here
-        Integer time = 5;//Integer.parseInt(args[0]);
-        Integer interval = 2;//Integer.parseInt(args[1]);
+        Integer time = Integer.parseInt(args[0]);
+        Integer interval = Integer.parseInt(args[1]);
         Integer maxTimeWait = (time*interval)*1000;
         
         ThreadCheckTime checkTime = new ThreadCheckTime(maxTimeWait);
@@ -36,6 +38,7 @@ public class ServidorSimuladorUDP {
         Integer serverPort = 2006;
         DatagramSocket aSocket = null;
         
+        Operacoes.beginReplica();
         
         try {
             aSocket = new DatagramSocket(serverPort);
@@ -47,10 +50,10 @@ public class ServidorSimuladorUDP {
                 
                 ThreadServerRequest connection = new ThreadServerRequest(aSocket, request, buffer);
                 connection.start();
-            }      
-                
+            }
+                           
         } catch (SocketException se){se.getMessage();}
-        
+       
     }
     
 }

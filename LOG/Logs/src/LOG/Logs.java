@@ -20,7 +20,9 @@ public class Logs {
     public static void LogMessage(String log, String serverName){
        
         try {
-            File file = new File(FileSystemView.getFileSystemView().getHomeDirectory() +serverName+".txt");
+            String userHome = System.getProperty("user.home");
+            File file = new File(userHome + "/" +serverName+".txt");
+            
             if (!file.exists()) {
 	     file.createNewFile();
             }

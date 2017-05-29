@@ -11,6 +11,8 @@ import Entidades.Veiculo;
 import simulador.object.SimuladorObject;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.sql.SQLException;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import static servidor.simulador.udp.ServidorSimuladorUDP.connectedVehicle;
 
@@ -33,7 +35,7 @@ public class ThreadServerRequest extends Thread{
 
     public void run() {
         try {
-            //SERVER REQUEST STRING -> COD#YYYY#MM#DD#HH#MM#SS#LAT#LONG
+            //SERVER REQUEST: STRING -> COD#YYYY#MM#DD#HH#MM#SS#LAT#LONG
             
                 String requestReceive = new String(clientPacket.getData()).trim();
                 
@@ -45,25 +47,22 @@ public class ThreadServerRequest extends Thread{
                 SimuladorObject so = new SimuladorObject(Integer.parseInt(parts[0]), c.getTime(), 
                                                         Float.parseFloat(parts[7]), Float.parseFloat(parts[8]));
                 
-                String info = "Server Receive request -> "+ so.toString() + " from-> "+clientPacket.getAddress()+ " port ->" + clientPacket.getPort();
+            //LOG MESSAGE
+                String info = new Date().toString()+": Server UDP Receive request -> "+ so.toString() + " from-> "+clientPacket.getAddress()+ " port ->" + clientPacket.getPort();
                 System.out.println(info);
                 LOG.Logs.LogMessage(info, s);
                 
-                //CHECKTIME
+            //CHECKTIME
                 connectedVehicle.put(so.getCodigo(), System.currentTimeMillis());
                 
-                //SAVE POSITION
+            //SAVE POSITION
                 Veiculo v = new Veiculo();
                 v.setCodigo(so.getCodigo());
                 Operacoes.adicionaPosicao(new Posicao(so.getDataHora(), so.getLat(), so.getLon(),v));
-                
-                
-//                DatagramPacket reply = new DatagramPacket(clientPacket.getData(), clientPacket.getLength(), 
-//                                                          clientPacket.getAddress(), clientPacket.getPort());
-//                clientSocket.send(reply);
             
-        } catch (Exception ioe){
+        } catch (NumberFormatException | SQLException ioe){
             System.out.println(ioe.getMessage());
+            LOG.Logs.LogMessage(ioe.getMessage(), s);
         }
     }    
     

@@ -68,7 +68,7 @@ public class ThreadClientRequest extends Thread{
                 gc.setTime(so.getDataHora());
                 
                 String dt = so.getCodigo()+"#"+gc.get(GregorianCalendar.YEAR)+"#"+(gc.get(GregorianCalendar.MONTH)+1)+
-                            "#"+ gc.get(GregorianCalendar.DAY_OF_MONTH)+"#"+gc.get(GregorianCalendar.HOUR)+
+                            "#"+ gc.get(GregorianCalendar.DAY_OF_MONTH)+"#"+gc.get(GregorianCalendar.HOUR_OF_DAY)+
                             "#"+ gc.get(GregorianCalendar.MINUTE)+ "#"+gc.get(GregorianCalendar.SECOND)+
                             "#"+so.getLat()+"#"+so.getLon();
                 byte[] data = dt.getBytes();
@@ -80,11 +80,6 @@ public class ThreadClientRequest extends Thread{
                 DatagramPacket request = new DatagramPacket(data, data.length, aHost, serverPort);
                 aSocket.send(request);
                 System.out.println("Client send request -> "+ so.toString()+ " from -> "+request.getAddress() + " port -> "+ request.getPort());
-            
-//            //WAIT REPlY
-//                byte[] buffer = new byte[500];
-//                DatagramPacket reply = new DatagramPacket(buffer, buffer.length);
-//                aSocket.receive(reply);
            
                 sleep(so.getSendRequest()*1000);
             }

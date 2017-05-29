@@ -5,7 +5,6 @@
  */
 package servidor.simulador.udp;
 
-import Banco.Conexao;
 import Banco.Operacoes;
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -14,6 +13,8 @@ import java.net.SocketException;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -26,11 +27,12 @@ public class ServidorSimuladorUDP {
      */
     static Map<Integer,Long> connectedVehicle = new ConcurrentHashMap<>();
     
-    public static void main(String[] args) throws ClassNotFoundException, IOException, InterruptedException, SQLException {
+    public static void main(String[] args){
         // TODO code application logic here
         Integer time = Integer.parseInt(args[0]);
         Integer interval = Integer.parseInt(args[1]);
         Integer maxTimeWait = (time*interval)*1000;
+        String s = "ServidorSimuladorUDP";
         
         ThreadCheckTime checkTime = new ThreadCheckTime(maxTimeWait);
         checkTime.start();
@@ -38,9 +40,9 @@ public class ServidorSimuladorUDP {
         Integer serverPort = 2006;
         DatagramSocket aSocket = null;
         
-        Operacoes.beginReplica();
-        
         try {
+            Operacoes.beginReplica();
+            
             aSocket = new DatagramSocket(serverPort);
             
             while(true){
@@ -52,7 +54,14 @@ public class ServidorSimuladorUDP {
                 connection.start();
             }
                            
-        } catch (SocketException se){se.getMessage();}
+        } catch (SocketException se){
+            se.getMessage();
+            LOG.Logs.LogMessage(se.getMessage(), s);
+        } 
+        catch (IOException | SQLException ex) {
+            Logger.getLogger(ServidorSimuladorUDP.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.Logs.LogMessage(ex.getMessage(), s);
+        }
        
     }
     

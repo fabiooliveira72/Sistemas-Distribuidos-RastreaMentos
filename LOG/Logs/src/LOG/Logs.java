@@ -9,6 +9,8 @@ package LOG;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import javax.swing.filechooser.FileSystemView;
 
 /**
@@ -20,8 +22,8 @@ public class Logs {
     public static void LogMessage(String log, String serverName){
        
         try {
-            String userHome = System.getProperty("user.home");
-            File file = new File(userHome + "/" +serverName+".txt");
+            Path path = Paths.get(System.getProperty("user.home"),serverName+".txt");
+            File file = new File(path.toString());
             
             if (!file.exists()) {
 	     file.createNewFile();

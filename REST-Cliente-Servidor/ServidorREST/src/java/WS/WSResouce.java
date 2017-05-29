@@ -115,7 +115,9 @@ public class WSResouce {
         v.setTipo((Integer) parJsonVeiculo.get("tipo"));
         v.setCapacidade((Integer) parJsonVeiculo.get("capacidade"));
         v.setUnpac(parJsonVeiculo.get("unpac").toString());
+        Operacoes.beginReplica();
         Operacoes.adicionaVeiculo(v);
+        Operacoes.endReplica();
        Gson r = new Gson();
         return r.toJson(v.getCapacidade());
     }

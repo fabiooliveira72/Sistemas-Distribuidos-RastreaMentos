@@ -41,7 +41,6 @@ public class Operacoes {
     
     // Método que adiciona um veículo
     public static void adicionaVeiculo(Veiculo veiculo) throws SQLException {
-        
             String sql = "insert into veiculo (codigo, placa, tipo, capacidade, unpac) values (?, ?, ?, ?, ?)";
             PreparedStatement stmt = Conexao.getPreparedStatement(sql);
             stmt.setInt(1, veiculo.getCodigo());
@@ -50,12 +49,11 @@ public class Operacoes {
             stmt.setInt(4, veiculo.getCapacidade());
             stmt.setString(5, veiculo.getUnpac());
             stmt.executeUpdate();
-
     }
     
     // Método que exclui um veículo
     public static void deletaVeiculo(Integer codigo) throws SQLException {
-  
+        
         String sql = "delete from veiculo where codigo = ?";
         PreparedStatement stmt = Conexao.getPreparedStatement(sql);
         stmt.setInt(1, codigo);
@@ -65,7 +63,6 @@ public class Operacoes {
     
      // Método que altera um veículo
     public static void alteraVeiculo(Veiculo veiculo) throws SQLException {
-                  
         String sql = "update veiculo set placa = ?, tipo = ?, capacidade = ?, unpac = ? where codigo = ?";
         PreparedStatement stmt = Conexao.getPreparedStatement(sql);
         stmt.setString(1, veiculo.getPlaca());
@@ -74,7 +71,6 @@ public class Operacoes {
         stmt.setString(4, veiculo.getUnpac());
         stmt.setInt(5, veiculo.getCodigo());
         stmt.executeUpdate();
-
     }
     
      // Método que faz a pesquisa de um veículo passando o código do veículo a ser buscado

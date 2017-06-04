@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+<script>
+// <!--!!!!!!!!!!!!!!!!!!!!!!! CONSULTAR !!!!!!!!!!!!!!!!!!!!!!!-->
+$(document).ready(function(){
+    $('#input_18').click(function(){
+        
+        var codigo = $('#input_20').val();//JSON.stringify(v);
+        
+        $.ajax({
+            type:'GET',
+            url:'http://34.211.122.0:8080/ServREST/webresources/WSRRastreamento/consultaveiculo/'+codigo,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success:function(data){
+                console.log(data);
+                alert("CAPACIDADE: " + data.capacidade + " |" + " DATA: " + data.codigo + " |" + " PLACA: " + data.placa + " |" + " TIPO: " + data.tipo + " |" + " UnPac: " + data.unpac);
+            }
+        });
+    });
+});
+</script>
+
+<script type="text/javascript">
+  // <!--!!!!!!!!!!!!!!!!!!!!!!! ADICIONAR !!!!!!!!!!!!!!!!!!!!!!!-->
+$(document).ready(function(){
+    $('#input_8').click(function(){
+        
+        //var add = {"codigo": 222, "placa": 'IFH', "tipo": 1, "capacidade": 5, "unpac": 'UNP'};
+        //var add = $('#input_6').val() + ',' + $('#input_4').val() + ',' + $('input_3').val() + ',' +  $('input_5').val() + ',' + $('input_7').val();
+        var cod = $('#input_6').val();
+        var pla = $('#input_4').val();
+        var tip = $('input_3').val();
+        var cap = $('input_5').val();
+        var unp = $('input_7').val();
+
+        //var add = {"codigo": $('#input_6').val(), "placa": $('#input_4').val(), "tipo": $('input_3').val(), "capacidade": $('input_5').val(), "unpac": $('input_7').val()};
+
+        var add = {"codigo": cod, "placa": pla, "tipo": tip, "capacidade": cap, "unpac": unp};
+
+        alert(add);
+        var obj = JSON.stringify(add);
+        
+        $.ajax({
+            type:'POST',
+            url:'http://34.211.122.0:8080/ServREST/webresources/WSRRastreamento/adicionaveiculo',
+            data: obj,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success:function(data){
+                console.log(data);
+            }
+        });
+    });
+});
+</script>
+</head>
+<body>
+
+
+<!--!!!!!!!!!!!!!!!!!!!!!!! ADICIONAR !!!!!!!!!!!!!!!!!!!!!!!-->
+<li id="cid_1" class="" data-type="control_head">
+        <div class=" ">
+          <div class="header-text httal htvam">
+            <h2 id="header_1" class="form-header" data-component="header">
+              Adicionar
+            </h2>
+          </div>
+        </div>
+      </li>
+      <li class="" data-type="" id="id_3">
+        <label class="" id="label_3" for="input_3"> Tipo </label>
+        <div id="cid_3" class=" ">
+          <input type="text" id="input_3" name="q3_tipo" data-type="" class="" size="20" value="" data-component="textbox" />
+        </div>
+      </li>
+      <li class="" data-type="" id="id_4">
+        <label class="" id="label_4" for="input_4"> Placa </label>
+        <div id="cid_4" class=" ">
+          <input type="text" id="input_4" name="q4_placa" data-type="" class="" size="20" value="" data-component="textbox" />
+        </div>
+      </li>
+      <li class="" data-type="" id="id_5">
+        <label class="" id="label_5" for="input_5"> Capacidade </label>
+        <div id="cid_5" class=" ">
+          <input type="text" id="input_5" name="q5_capacidade" data-type="" class="" size="20" value="" data-component="textbox" />
+        </div>
+      </li>
+      <li class="" data-type="" id="id_6">
+        <label class="" id="label_6" for="input_6"> Codigo </label>
+        <div id="cid_6" class=" ">
+          <input type="text" id="input_6" name="q6_codigo" data-type="" class="" size="20" value="" data-component="textbox" />
+        </div>
+      </li>
+      <li class="" data-type="" id="id_7">
+        <label class="" id="label_7" for="input_7"> Unpac </label>
+        <div id="cid_7" class=" ">
+          <input type="text" id="input_7" name="q7_unpac" data-type="" class="" size="20" value="" data-component="textbox" />
+        </div>
+      </li>
+      <li class="" data-type="control_button" id="id_8">
+        <div id="cid_8" class="">
+          <div style="margin-left:156px;" class="form-buttons-wrapper">
+            <button id="input_8" type="submit" class="" data-component="button">
+              Enviar
+            </button>
+          </div>
+        </div>
+      </li>
+
+
+<!--!!!!!!!!!!!!!!!!!!!!!!! CONSULTAR !!!!!!!!!!!!!!!!!!!!!!!-->
+<li id="cid_19" class="" data-type="control_head">
+        <div class=" ">
+          <div class="header-text httal htvam">
+            <h2 id="header_19" class="form-header" data-component="header">
+              Consultar
+            </h2>
+          </div>
+        </div>
+      </li>
+      <li class="" data-type="" id="id_20">
+        <label class="" id="label_20" for="input_20"> Codigo: </label>
+        <div id="cid_20" class=" ">
+          <input type="text" id="input_20" name="q20_codigo20" data-type="" class="" size="20" value="" data-component="textbox" />
+        </div>
+      </li>
+      <li class="" data-type="control_button" id="id_18">
+        <div id="cid_18" class="">
+          <div style="margin-left:156px;" class="form-buttons-wrapper">
+            <button id="input_18" type="submit" class="" data-component="button">
+              Consultar
+            </button>
+          </div>
+        </div>
+      </li>
+
+</body>
+</html>
+
+<!--
+                $each(data, function(id,obj){
+                    alert(obj.login + " " + obj.senha + " " + obj.email + " " + obj.perfil);
+                }
+  -->

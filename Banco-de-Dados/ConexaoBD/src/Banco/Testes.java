@@ -32,26 +32,26 @@ public class Testes extends Operacoes{
     public static void main(String[] args) throws SQLException {
         // TODO code application logic here
         
-/*    ADICIONA CARRO..........
-        
-        Veiculo veiculo = new Veiculo();
-       
-        veiculo.setCodigo(1);
-        veiculo.setPlaca("ILH1124");
-        veiculo.setTipo(1);
-        veiculo.setCapacidade(1);
-        veiculo.setUnpac("unpac");
-           
-        System.out.println("Agora vai adicionar!!");
-       
-        try {
-            Operacoes.adicionaVeiculo(veiculo);
-            System.out.println("INCLUIU COM SUCESSO!!!");
-            } catch (SQLException ex) {
-            Logger.getLogger(Testes.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("ERRO AO INCLUIR...");
-        }
-     */ 
+//    ADICIONA CARRO..........
+//        
+//        Veiculo veiculo = new Veiculo();
+//       
+//        veiculo.setCodigo(400);
+//        veiculo.setPlaca("ILH1124");
+//        veiculo.setTipo(1);
+//        veiculo.setCapacidade(1);
+//        veiculo.setUnpac("unpac");
+//           
+//        System.out.println("Agora vai adicionar!!");
+//       
+//        try {
+//            Operacoes.adicionaVeiculo(veiculo);
+//            System.out.println("INCLUIU COM SUCESSO!!!");
+//            } catch (SQLException ex) {
+//            Logger.getLogger(Testes.class.getName()).log(Level.SEVERE, null, ex);
+//            System.out.println("ERRO AO INCLUIR...");
+//        }
+//     
 //        */
         /*----------------------------------------------------------------------------------------------------*/
             
@@ -81,11 +81,11 @@ public class Testes extends Operacoes{
         
         /*------------------------------------------------------------------------------------------------*/
         
-            /*ALTERAR UM CARRO......
+        //ALTERAR UM CARRO......
             Veiculo veiculo = new Veiculo();
             
-            veiculo.setCodigo(1);
-            veiculo.setPlaca("ILH1124");
+            veiculo.setCodigo(400);
+            veiculo.setPlaca("ILH112");
             veiculo.setTipo(4);
             veiculo.setCapacidade(1);
             veiculo.setUnpac("unpac");
@@ -95,12 +95,12 @@ public class Testes extends Operacoes{
         try {
             Operacoes.alteraVeiculo(veiculo);
             System.out.println("ALTEROU COM SUCESSO!!!");
+            
              } catch (SQLException ex) {
             Logger.getLogger(Testes.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("ERRO AO ALTERAR...");
             }
          
-          /  */
             
       /*---------------------------------------------------------------------------------------------------------*/
         

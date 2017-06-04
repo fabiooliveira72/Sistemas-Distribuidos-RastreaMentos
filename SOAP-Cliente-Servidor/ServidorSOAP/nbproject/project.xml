@@ -8,9 +8,9 @@
         <data xmlns="http://www.netbeans.org/ns/j2ee-ejbjarproject/3">
             <name>ServicoSOAP</name>
             <minimum-ant-version>1.6.5</minimum-ant-version>
-            <included-library dirs="200">reference.ConexaoBD.jar</included-library>
             <included-library dirs="200">file.reference.postgresql-9.4-1200-jdbc41.jar</included-library>
             <included-library dirs="200">file.reference.Logs.jar</included-library>
+            <included-library dirs="200">reference.ConexaoBD.jar</included-library>
             <source-roots>
                 <root id="src.dir" name="Pacotes de Códigos-fonte"/>
             </source-roots>

@@ -38,10 +38,8 @@ public class ServidorSoapSD {
     @WebMethod(operationName = "adicionaVeiculo")
     public boolean adicionaVeiculo(@WebParam(name = "veiculo") Veiculo veiculo) {
         try {
-            Operacoes.beginReplica();
             Operacoes.adicionaVeiculo(veiculo);
             LOG.Logs.LogMessage(getDataHora()+" ServidorSOAP -> Adiciona Veiculo", "ServidorSOAP");
-            Operacoes.endReplica();
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(ServidorSoapSD.class.getName()).log(Level.SEVERE, null, ex);
@@ -56,10 +54,8 @@ public class ServidorSoapSD {
     @WebMethod(operationName = "alteraVeiculo")
     public boolean alteraVeiculo(@WebParam(name = "veiculo") Veiculo veiculo) {
         try {
-            Operacoes.beginReplica();
             Operacoes.alteraVeiculo(veiculo);
             LOG.Logs.LogMessage(getDataHora()+" ServidorSOAP -> Altera Veiculo", "ServidorSOAP");
-            Operacoes.endReplica();
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(ServidorSoapSD.class.getName()).log(Level.SEVERE, null, ex);
@@ -74,10 +70,8 @@ public class ServidorSoapSD {
     @WebMethod(operationName = "deletaVeiculo")
     public boolean deletaVeiculo(@WebParam(name = "codigo") int codigo) {
         try {
-            Operacoes.beginReplica();
             Operacoes.deletaVeiculo(codigo);
             LOG.Logs.LogMessage(getDataHora()+" ServidorSOAP -> Deleta Veiculo", "ServidorSOAP");
-            Operacoes.endReplica();
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(ServidorSoapSD.class.getName()).log(Level.SEVERE, null, ex);
@@ -92,10 +86,9 @@ public class ServidorSoapSD {
     @WebMethod(operationName = "consultaVeiculo")
     public Veiculo consultaVeiculo(@WebParam(name = "codigo") int codigo) {
        Veiculo v= null;
-        try {      
+        try {
             v  = Operacoes.consultaVeiculo(codigo);
             LOG.Logs.LogMessage(getDataHora()+" ServidorSOAP -> Consulta Veiculo", "ServidorSOAP");
-            Operacoes.endReplica();
         } catch (SQLException ex) {
             Logger.getLogger(ServidorSoapSD.class.getName()).log(Level.SEVERE, null, ex);
             LOG.Logs.LogMessage(getDataHora()+" ServidorSOAP -> SQLEXCPETION consulta veiculo-> "+ex.getMessage(), "ServidorSOAP");

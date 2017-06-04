@@ -17,7 +17,7 @@ import java.sql.Statement;
  */
 public class Conexao {
 
-    static String url = "jdbc:postgresql://amazon.kressin.com.br:8080/sd_rastreamentos_database";
+    static String url = "jdbc:postgresql://amazon.kressin.com.br:8080/sd_database";
     static String driver = "org.postgresql.Driver";
     static String usuario = "postgres";
     static String senha = "@Sd!()$2@!7";

@@ -22,7 +22,7 @@ public class Logs {
     public static void LogMessage(String log, String serverName){
        
         try {
-            Path path = Paths.get(System.getProperty("user.home"),serverName+".txt");
+            Path path = Paths.get(System.getProperty("user.home"),serverName+".log");
             File file = new File(path.toString());
             
             if (!file.exists()) {

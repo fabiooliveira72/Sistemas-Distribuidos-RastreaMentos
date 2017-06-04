@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 import br.com.banco.Operacoes;
+import br.com.entidades.Posicao;
 import br.com.entidades.Veiculo;
 
 public class TCPServer {
@@ -31,8 +32,10 @@ public class TCPServer {
 		Veiculo veiculo;
 //		Boolean check = true;
 		int codigo;
+		List<Posicao> posicoes;
+		Date d;
 
-		Operacoes.beginReplica();
+//		Operacoes.beginReplica();
 		
 		try {  
 
@@ -137,8 +140,23 @@ public class TCPServer {
 				logger.info("Cliente com ip: " + connectionSocket.getInetAddress() + " listou veículos do tipo: " + tipo);
 				break;
 			case 6:
+				//lista todas as localizações
+				System.out.println("To mostrando todas as localizações!");
+				codigo = (Integer)inFromClient.readObject();
+				d = null;
+				posicoes = new ArrayList<>();
+				posicoes = Operacoes.listaPosicaoVeiculo(codigo, d);
+				outToClient.writeObject(posicoes);
+				logger.info("Cliente com ip: " + connectionSocket.getInetAddress() + " listou as posições do veículo: " + codigo);
 				break;
 			case 7:
+				//lista localizações a partir de tal hora
+				codigo = (Integer)inFromClient.readObject();
+				d = (Date)inFromClient.readObject();
+				posicoes = new ArrayList<>();
+				posicoes = Operacoes.listaPosicaoVeiculo(codigo, d);
+				outToClient.writeObject(posicoes);
+				logger.info("Cliente com ip: " + connectionSocket.getInetAddress() + " listou as posições do veículo (hora selecionada): " + codigo);
 				break;
 			case 0:
 				System.out.println("Conexão encerrada!");

@@ -49,7 +49,7 @@
 function TestSupport() {
     this.wadlDoc = null;
     this.wadlURL = '';
-    this.wadlErr = 'Não é possível acessar o WADL. Reinicie a aplicação RESTful e atualize esta página ou forneça o URL aqui. Isso pode ser causado pela implementação REST sem fornecer o arquivo WADL automaticamente (como JBoss RESTEasy). Nesse caso, gere-o previamente de maneira manual ou alterne para bibliotecas Jersey.';
+    this.wadlErr = 'Cannot access WADL. Please restart your RESTful application, and refresh this page or provide the URL here. This may be caused by the REST implementation not providing the WADL file automatically (such as JBoss RESTEasy). In that case you have to pregenerate it manually or switch to Jersey libraries.';
     this.currentValidUrl = '';
     this.breadCrumbs = [];
     this.currentMethod = '';
@@ -80,11 +80,11 @@ function TestSupport() {
     this.cg.src = "cg.gif";
 
     this.viewIds = [
-        { "id" : "table" , "name":"View Tabular", "type":"tableContent"}, 
-        { "id" : "raw" , "name":"View Bruta", "type":"rawContent"}, 
-        { "id" : "structure" , "name":"Sub-Recurso", "type":"structureInfo"},
-        { "id" : "header" , "name":"Cabeçalhos", "type":"headerInfo"},
-        { "id" : "monitor" , "name":"Monitor Http", "type":"monitorContent"}];
+        { "id" : "table" , "name":"Tabular View", "type":"tableContent"}, 
+        { "id" : "raw" , "name":"Raw View", "type":"rawContent"}, 
+        { "id" : "structure" , "name":"Sub-Resource", "type":"structureInfo"},
+        { "id" : "header" , "name":"Headers", "type":"headerInfo"},
+        { "id" : "monitor" , "name":"Http Monitor", "type":"monitorContent"}];
     
     this.xhr = new XHR();
     this.wdr = new WADLParser();
@@ -124,7 +124,7 @@ TestSupport.prototype = {
             this.wdr.updateMenu(this.wadlURL, ts.wadlDoc);
         } else {
             this.setvisibility('main', 'inherit');
-            this.updatepage('content', '<span class=bld>Página de Ajuda</span><br/><br/><p>Não é possível acessar o WADL. Reinicie a aplicação REST e atualize esta página. Isso pode ser causado pela implementação REST sem fornecer o arquivo WADL automaticamente (como JBoss RESTEasy). Nesse caso, gere-o previamente de maneira manual ou alterne para bibliotecas Jersey.</p><p>Se você ainda vir esse erro e estiver acessando essa página usando o Firefox com o plug-in Firebug, <br/>será necessário desativar o firebug para arquivos locais. Ou seja, na barra de menus do Firefox, marque <br/>Ferramentas > Firebug > Desativar Firebug para Arquivos Locais</p>');
+            this.updatepage('content', '<span class=bld>Help Page</span><br/><br/><p>Cannot access WADL. Please restart your REST application, and refresh this page. This may be caused by the REST implementation not providing the WADL file automatically (such as JBoss RESTEasy). In that case you have to pregenerate it manually or switch to Jersey libraries.</p><p>If you still see this error and if you are accessing this page using Firefox with Firebug plugin, then<br/>you need to disable firebug for local files. That is from Firefox menubar, check <br/>Tools > Firebug > Disable Firebug for Local Files</p>');
         }            
     },
 
@@ -235,7 +235,7 @@ TestSupport.prototype = {
     getMethodMimeTypeCombo : function (resource) {
         var methods = this.getElementsByTagName(resource, "method");
         var str = '<table border=0><tbody><tr><td valign="top"><span id="j_id14"><label for="methodSel" class="LblLev2Txt_sun4">'+
-                            '<span>Escolher método para testar: </span></label></span></td>';
+                            '<span>Choose method to test: </span></label></span></td>';
         str += "<td><span id=j_id14><select id='methodSel' class=MnuJmp_sun4 name='methodSel' onchange='javascript:ts.changeMethod();'>";
         for(var j=0;j<methods.length;j++) {
             var m = methods[j];                            
@@ -256,7 +256,7 @@ TestSupport.prototype = {
                     str += "  <option class=MnuJmpOpt_sun4 value='"+dispName+"["+j+"]'>"+dispName+"</option>";
             }
         }   
-        str += "</select></span></td><td width=46/><td><a class='Btn1_sun4 Btn1Hov_sun4' onclick='ts.testResource()'>Testar</a></td></tr></tbody></table>";
+        str += "</select></span></td><td width=46/><td><a class='Btn1_sun4 Btn1Hov_sun4' onclick='ts.testResource()'>Test</a></td></tr></tbody></table>";
         return str;
     },
     
@@ -324,7 +324,7 @@ TestSupport.prototype = {
         this.showBreadCrumbs(uri);
         var req = this.getDisplayUri(uri);
         var str = '<br/><table border=0><tbody><tr><td valign="top"><span id="j_id14"><label for="methodSel" class="LblLev2Txt_sun4">'+
-                            '<span>Escolher método para testar: </span></label></span></td>';
+                            '<span>Choose method to test: </span></label></span></td>';
         str += "<td><span id=j_id14><select id='methodSel' class=MnuJmp_sun4 name='methodSel' onchange='javascript:ts.changeMethod();'>";
         str += "  <option class=MnuJmpOpt_sun4 selected value='GET'>GET</option>";
         str += "  <option class=MnuJmpOpt_sun4 value='PUT'>PUT</option>";
@@ -341,8 +341,8 @@ TestSupport.prototype = {
         str += "  <option class=MnuJmpOpt_sun4 value='image/*'>image/*</option>"; 
         str += "</select></span></td>";
         str += "<td width=30/>"
-        str += "<td><span id=j_id14><a class='Btn2_sun4 Btn1Hov_sun4' onclick='ts.addParam()'>Adicionar Parâmetro</a>";
-        str += "</span></td><td><a class='Btn1_sun4 Btn1Hov_sun4' onclick='ts.testResource()'>Testar</a></td></tr></tbody></table><br/>";
+        str += "<td><span id=j_id14><a class='Btn2_sun4 Btn1Hov_sun4' onclick='ts.addParam()'>Add Parameter</a>";
+        str += "</span></td><td><a class='Btn1_sun4 Btn1Hov_sun4' onclick='ts.testResource()'>Test</a></td></tr></tbody></table><br/>";
         ts.updatepage('testaction', str);
         ts.updatepage('testinput', this.getFormRep(req, uri, mName, mediaType));
         var paramRep = this.getTemplateParamsRep(req);
@@ -351,7 +351,7 @@ TestSupport.prototype = {
         }
         var disp = this.getDisplayUri(req);
         var uriLink = "<a id='"+req+"' class=Hyp_sun4 href=javascript:ts.doShowContent('"+req+"') >"+this.getDisplayURL(disp, 80)+"</a>";
-        this.updatepage('request', '<span class=bld>Recurso:</span> '+uriLink+' <br/>(<a href="'+req+'" class=Hyp_sun4 target="_blank"><span>'+this.getDisplayURL(req, 90)+'</span></a>)');
+        this.updatepage('request', '<span class=bld>Resource:</span> '+uriLink+' <br/>(<a href="'+req+'" class=Hyp_sun4 target="_blank"><span>'+this.getDisplayURL(req, 90)+'</span></a>)');
     },
     
     doShowStaticResource : function (uri, r) {
@@ -377,7 +377,7 @@ TestSupport.prototype = {
         }
         this.changeMethod();    
         var uriLink = "<a id='"+req+"' class=Hyp_sun4 href=javascript:ts.doShowContent('"+req+"') >"+this.getDisplayURL(disp, 80)+"</a>";
-        this.updatepage('request', '<span class=bld>Recurso:</span> '+uriLink+' <br/>(<a href="'+req+'" class=Hyp_sun4 target="_blank"><span>'+this.getDisplayURL(req, 90)+'</span></a>)');
+        this.updatepage('request', '<span class=bld>Resource:</span> '+uriLink+' <br/>(<a href="'+req+'" class=Hyp_sun4 target="_blank"><span>'+this.getDisplayURL(req, 90)+'</span></a>)');
     },
     
     getFormRep : function (req, uri, mName, mediaType) {
@@ -494,7 +494,7 @@ TestSupport.prototype = {
     clearAll : function() {
         this.clearOutput();
         document.getElementById('req_headers').style.visibility="hidden";
-        this.updatepage('request', 'Selecione um nó na barra de navegação (no lado esquerdo desta página) para testar.');
+        this.updatepage('request', 'Select a node on the navigation bar (on the left side of this page) to test.');
         this.updatepage('testaction', '');
         this.updatepage('testinput', '');
         this.updatepage('navigation', '');
@@ -578,15 +578,15 @@ TestSupport.prototype = {
         }
         if(mName == 'PUT' || mName == 'POST') {   
             str += '<tr><td valign="top"><span id="j_id14"><label for="blobParam" class="LblLev2Txt_sun4">'+
-                '<span>Conteúdo: </span></label></span></td>'+
-                '<td><span id="j_id14"><textarea class="TxtAra_sun4 TxtAraVld_sun4" id=blobParam name=params rows=6 cols=65>Insira o conteúdo aqui.</textarea></span></td></tr>';
+                '<span>Content: </span></label></span></td>'+
+                '<td><span id="j_id14"><textarea class="TxtAra_sun4 TxtAraVld_sun4" id=blobParam name=params rows=6 cols=65>Insert content here.</textarea></span></td></tr>';
         }
         str += '</tbody></table>';
         return str;
     },
     
     testResource : function () {
-        this.updatepage('result', 'Carregando...');
+        this.updatepage('result', 'Loading...');
         
         if (document.getElementById('req_hdr_1')) {
             ts.storeRequestHeaders();
@@ -744,7 +744,7 @@ TestSupport.prototype = {
     createIFrameForUrl : function (url) {
         var c = 
             '<iframe id="iFrame_" src="'+url+'" class="frame" width="'+ts.iframeWidth+'" align="left">'+
-                '<p>Ver <a class=Hyp_sun4 href="'+url+'">"'+url+'"</a>.</p>'+
+                '<p>See <a class=Hyp_sun4 href="'+url+'">"'+url+'"</a>.</p>'+
             '</iframe>';
         return c;
     },
@@ -799,16 +799,16 @@ TestSupport.prototype = {
     },
 
     monitor : function (method, xmlHttpReq, param) {
-        var rawContent = 'Recebida:\n<br/>'+this.printPretty(xmlHttpReq.responseText)+'\n<br/>';
+        var rawContent = 'Received:\n<br/>'+this.printPretty(xmlHttpReq.responseText)+'\n<br/>';
         if(param != null && param != undefined)
-            rawContent = 'Enviada:\n<br/>'+this.printPretty(param) + '\n\n<br/><br/>' + rawContent;
+            rawContent = 'Sent:\n<br/>'+this.printPretty(param) + '\n\n<br/><br/>' + rawContent;
         var cURL = this.currentValidUrl;
         var params = '';
         if(cURL.indexOf('?') > 0) {
             params = cURL.substring(cURL.indexOf('?')+1);
             cURL = cURL.substring(0, cURL.indexOf('?')+1);
         }
-        var s = 'Solicitação: ' + this.currentMethod + ' ' + cURL + '\n<br/>' + params +
+        var s = 'Request: ' + this.currentMethod + ' ' + cURL + '\n<br/>' + params +
                     '\n\n<br/><br/>Status: ' + xmlHttpReq.status + ' (' + xmlHttpReq.statusText + ')'+
                     '\n\n<br/><br/>Time-Stamp: ' + ' ' + xmlHttpReq.getResponseHeader('Date') + '';
         var prevs = '';
@@ -825,13 +825,13 @@ TestSupport.prototype = {
 
     updateContent : function (content) {
         var showRaw = true;
-        var cErr = 'O conteúdo pode não ter a Relação Conteúdo-Continente. Veja a View Bruta do conteúdo.';
+        var cErr = 'Content may not have Container-Containee Relationship. See Raw View for content.';
         if(content != null && content != undefined) {
             try {
                 if(content.indexOf("RequestFailed -->") != -1)
                     throw "Error: "+content;
                 if(content == '')
-                content = '---Sem Conteúdo---'
+                content = '---No Content---'
                 else
                     content = content.replace(/'/g,"\'");
                 var tableContent = cErr;
@@ -883,9 +883,9 @@ TestSupport.prototype = {
         var structure = this.xhr.options(this.currentValidUrl, 'application/vnd.sun.wadl+xml');
         var subResources = this.getContainerTable(ts.wdr.evaluateWADLUpdate(this.currentValidUrl, structure));
         if(subResources == null)
-            subResources = 'Sem Sub-Recursos Disponíveis.';
+            subResources = 'No Sub-Resources available.';
         var tabs = '<br/><span class=bld>Status:</span> '+ this.currentXmlHttpReq.status+' ('+this.currentXmlHttpReq.statusText+')<br/><br/>'+
-                    '<span class=bld>Resposta:</span> '+
+                    '<span class=bld>Response:</span> '+
                     '<div class="Tab1Div_sun4" id="tabTable"></div>'+
                     '<div class="tabMain">'+
                     '<div id="menu_bottom" class="stab tabsbottom"></div>'+
@@ -1004,7 +1004,7 @@ TestSupport.prototype = {
             }
         }
         if(actived)
-            return '<td class="Tab1TblSelTd_sun4"><div title="Seleção Atual: Campo de Texto" class="Tab1SelTxtNew_sun4"><a name="selectedTabAnchor" id="tab'+id+'"/>'+name+'</div></td>';
+            return '<td class="Tab1TblSelTd_sun4"><div title="Current Selection: Text Field" class="Tab1SelTxtNew_sun4"><a name="selectedTabAnchor" id="tab'+id+'"/>'+name+'</div></td>';
         else {
             if(id == '')
                 return '<td style="visibility: hidden;"><a href="javascript:ts.showViews(\''+id+'\')" class="Tab1Lnk_sun4" id="tab'+id+'">'+name+'</a></td>';
@@ -1016,8 +1016,8 @@ TestSupport.prototype = {
     getHeaderAsTable : function (xmlHttpReq) { 
         var header = xmlHttpReq.getAllResponseHeaders();
         var colNames = new Array()
-        colNames[0] = "Nome"
-        colNames[1] = "Valor"
+        colNames[0] = "Name"
+        colNames[1] = "Value"
         var colSizes = new Array()
         colSizes[0] = ""
         colSizes[1] = ""
@@ -1250,7 +1250,7 @@ TestSupport.prototype = {
             }
             var tab = 'width: 20px; border-right: #2574B7 1px solid; border-top: #2574B7 1px solid; border-left: #2574B7 1px solid; border-bottom: #2574B7 1px solid; color: #000000; text-align: center;';
             var addActionStr = '<div style="'+tab+'"><a style="text-decoration: none" href="javascript:ts.closeDebug()"><span style="color: red">X</span></a></div>';        
-            dbgComp.innerHTML = '<table><tr><td><span style="color: blue">Janela Depuração do Rest</span></td><td>'+addActionStr + '</td></tr></table><br/>';
+            dbgComp.innerHTML = '<table><tr><td><span style="color: blue">Rest Debug Window</span></td><td>'+addActionStr + '</td></tr></table><br/>';
         }
         var s = dbgComp.innerHTML;
         var now = new Date();
@@ -1965,7 +1965,7 @@ XHR.prototype = {
                 }
                 catch (e)
                 {
-                    ts.debug("Seu browser não suporta AJAX!");
+                    ts.debug("Your browser does not support AJAX!");
                 }
             }
         }
@@ -2046,12 +2046,12 @@ XHR.prototype = {
             if (this.isResponseReady(method, xmlHttpReq, content, monitor)) {
               var rtext = xmlHttpReq.responseText;
               if ( (rtext== undefined || rtext == '' ) && (method=='POST' || method=='PUT' || method=='DELETE')){
-                  return 'Nenhum conteúdo na resposta';
+                  return 'No content in response';
               }
               if(rtext == undefined || rtext == '' || rtext.indexOf('HTTP Status') != -1) {
-                  var err = method+' SolicitaçãoFailed RequestFailed --> Status: (' 
+                  var err = method+' RequestFailed RequestFailed --> Status: (' 
                   	   + xmlHttpReq.status+')\n<br/>'+
-                      'Resposta: {<br/>' + xmlHttpReq.responseText + "<br/>}";
+                      'Response: {<br/>' + xmlHttpReq.responseText + "<br/>}";
                   ts.debug('Failed XHR('+method+', '+url+'): '+err);
                   return err;
               }

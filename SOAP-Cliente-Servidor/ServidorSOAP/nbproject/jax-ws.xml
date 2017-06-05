@@ -2,8 +2,9 @@
 <jax-ws xmlns="http://www.netbeans.org/ns/jax-ws/1">
   <services>
     <service name="ServidorSoapSD">
-      <implementation-class>distribuidos.sistemas.trabalho.servicoSoap.ServidorSoapSD</implementation-class>
+      <implementation-class>ws.soap.ServidorSoapSD</implementation-class>
     </service>
   </services>
   <clients/>
+  <jsr109>false</jsr109>
 </jax-ws>

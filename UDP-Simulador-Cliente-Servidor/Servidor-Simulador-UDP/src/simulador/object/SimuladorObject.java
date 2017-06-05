@@ -41,7 +41,7 @@ public class SimuladorObject implements Serializable{
 
     @Override
     public String toString() {
-        return "SimuladorObject{" + "codigo=" + codigo + ", dataHora=" + dataHora + ", lat=" + lat + ", lon=" + lon +'}';
+        return "{" + "codigo=" + codigo + ", dataHora=" + dataHora + ", lat=" + lat + ", lon=" + lon +'}';
     }
     
     public Float getLon() {

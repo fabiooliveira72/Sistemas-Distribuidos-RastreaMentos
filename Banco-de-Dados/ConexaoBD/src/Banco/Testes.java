@@ -82,26 +82,26 @@ public class Testes extends Operacoes{
         /*------------------------------------------------------------------------------------------------*/
         
         //ALTERAR UM CARRO......
-            Veiculo veiculo = new Veiculo();
-            
-            veiculo.setCodigo(400);
-            veiculo.setPlaca("ILH112");
-            veiculo.setTipo(4);
-            veiculo.setCapacidade(1);
-            veiculo.setUnpac("unpac");
-
-            System.out.println("Agora vai Alterar!!");
-            
-        try {
-            Operacoes.alteraVeiculo(veiculo);
-            System.out.println("ALTEROU COM SUCESSO!!!");
-            
-             } catch (SQLException ex) {
-            Logger.getLogger(Testes.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("ERRO AO ALTERAR...");
-            }
-         
-            
+//            Veiculo veiculo = new Veiculo();
+//            
+//            veiculo.setCodigo(400);
+//            veiculo.setPlaca("ILH112");
+//            veiculo.setTipo(4);
+//            veiculo.setCapacidade(1);
+//            veiculo.setUnpac("unpac");
+//
+//            System.out.println("Agora vai Alterar!!");
+//            
+//        try {
+//            Operacoes.alteraVeiculo(veiculo);
+//            System.out.println("ALTEROU COM SUCESSO!!!");
+//            
+//             } catch (SQLException ex) {
+//            Logger.getLogger(Testes.class.getName()).log(Level.SEVERE, null, ex);
+//            System.out.println("ERRO AO ALTERAR...");
+//            }
+//         
+//            
       /*---------------------------------------------------------------------------------------------------------*/
         
 //            

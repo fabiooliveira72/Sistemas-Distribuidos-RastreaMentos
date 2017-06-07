@@ -136,9 +136,10 @@ public class WSResouce {
     public String ConsultaVeiculo(@PathParam("codigo") Integer codigo) {
         Gson g = new Gson();
         try {
+            String r = g.toJson(Operacoes.consultaVeiculo(codigo));
             LOG.Logs.LogMessage(getDataHora()+" ServidorREST -> Consulta Veiculo", "ServidorREST");
             System.out.println(getDataHora()+" ServidorREST -> Consulta Veiculo");
-            return g.toJson(Operacoes.consultaVeiculo(codigo));
+            return r;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             LOG.Logs.LogMessage(getDataHora()+" ServidorREST -> SQLEXCPETION Consulta veiculo-> "+ex.getMessage(), "ServidorREST");

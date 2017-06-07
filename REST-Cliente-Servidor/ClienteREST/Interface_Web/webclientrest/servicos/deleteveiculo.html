@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+	<title>DELETA VEICULO</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+<script>
+
+$(document).ready(function(){
+	    $('#deletaveiculo').click(function(){
+
+	        var codigo = $('#del_codigo').val();
+
+	        $.ajax({
+	            type:'DELETE',
+	            url:'http://34.211.122.0:8080/ServREST/webresources/WSRRastreamento/deleteveiculo/'+codigo,
+	            contentType: "application/json; charset=utf-8",
+	            dataType: "json",
+	            success:function(data){
+	                if(data == 1){
+										alert("Veiculo Deletado!");
+									}
+									else if (data == 0){
+										alert("Veiculo nao existe!");
+									}
+									console.log(data);
+	            }
+	        });
+	    });
+	});
+
+</script>
+</head>
+<body>
+<p>DELETA VEICULO</p>
+
+<p>Codigo : &nbsp; &nbsp; &nbsp;&nbsp;<input id="del_codigo" maxlength="10" name="Codigo" size="10" type="text" /></p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<input id="deletaveiculo" name="Deleta" type="button" value="Deleta" /></p>
+<p>&nbsp;</p>
+<a href="../index.html">Retornar ao Menu</a>
+</body>
+</html>

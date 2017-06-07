@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>ADICIONA VEICULO</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+	<script>
+	// <!--!!!!!!!!!!!!!!!!!!!!!!! ADICIONAR !!!!!!!!!!!!!!!!!!!!!!!-->
+	$(document).ready(function(){
+	  $('#adicionaveiculo').click(function(){
+
+	    var cod = $("#add_codigo").val();
+	    var pla = $("#add_placa").val();
+	    var tip = $("#add_tipo").val();
+	    var cap = $("#add_capacidade").val();
+	    var unp = $("#add_unpac").val();
+
+	    var add = {codigo: cod, placa: pla, tipo: tip, capacidade: cap, unpac: unp};
+
+	    var obj = JSON.stringify(add);
+
+	    $.ajax({
+	      type:'POST',
+	      url:'http://34.211.122.0:8080/ServREST/webresources/WSRRastreamento/adicionaveiculo',
+	      contentType: "application/json; charset=utf-8",
+	      data: obj,
+	      dataType: "json",
+	      success:function(data){
+	        if(data == 1)
+	        	alert("Adicionado com sucesso!");
+	        else if(data == 0) {
+	          alert("Veiculo já existe!");
+	        }
+	        console.log(data);
+	      }
+	    });
+	  });
+	});
+</script>
+</head>
+<body>
+<p>ADICIONA VEICULO</p>
+
+<p>Codigo : &nbsp; &nbsp; &nbsp;&nbsp;<input id="add_codigo" maxlength="10" name="Codigo" size="10" type="text" /></p>
+
+<p>Placa:&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<input id="add_placa" maxlength="7" name="placa" size="10" type="text" /></p>
+
+<p>Tipo: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<input id="add_tipo"maxlength="10" name="tipo" size="10" type="text" /></p>
+
+<p>Capacidade:&nbsp;<input id="add_capacidade" maxlength="10" name="capacidade" size="10" type="text" /></p>
+
+<p>Unpac: &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<input id="add_unpac" maxlength="5" name="unpac" size="10" type="text" /></p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<input id="adicionaveiculo" name="Adicionar" type="button" value="Adicionar" /></p>
+
+<p>&nbsp;</p>
+<a href="../index.html">Retornar ao Menu</a>
+</body>
+</html>

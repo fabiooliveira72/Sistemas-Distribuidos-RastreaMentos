@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+	<title>CONSULTA VEICULO</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+	<script>
+
+	$(document).ready(function(){
+		    $('#consultaveiculo').click(function(){
+
+		        var codigo = $('#con_codigo').val();
+
+		        $.ajax({
+		            type:'GET',
+		            url:'http://34.211.122.0:8080/ServREST/webresources/WSRRastreamento/consultaveiculo/'+codigo,
+		            contentType: "application/json; charset=utf-8",
+		            dataType: "json",
+		            success:function(data){
+		                if(data == 0){
+											alert("Veiculo nao existe!");
+										}
+										else{
+											alert("Codigo: "+data.codigo+" Placa: "+data.placa+" Tipo: "+data.tipo+" Capacidade: "+data.capacidade+" Unpac: "+data.unpac);
+										}
+										console.log(data);
+		            }
+		        });
+		    });
+		});
+
+	</script>
+</head>
+<body>
+<p>CONSULTA VEICULO</p>
+
+<p>Codigo : &nbsp; &nbsp; &nbsp;&nbsp;<input id="con_codigo" maxlength="10" name="Codigo" size="10" type="text" /></p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<input id="consultaveiculo" name="Consulta" type="button" value="Consulta" /></p>
+<p>&nbsp;</p>
+<a href="../index.html">Retornar ao Menu</a>
+</body>
+</html>

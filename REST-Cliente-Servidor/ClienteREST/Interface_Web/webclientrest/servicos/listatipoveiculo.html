@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+	<title>LISTA TIPO VEICULO</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+<script>
+
+	$(document).ready(function(){
+				$('#listatipoveiculo').click(function(){
+
+						var tipo = $('#ls_tipo').val();
+
+						$.ajax({
+								type:'GET',
+								url:'http://34.211.122.0:8080/ServREST/webresources/WSRRastreamento/listatipoveiculo/'+tipo,
+								contentType: "application/json; charset=utf-8",
+								dataType: "json",
+								success:function(data){
+										if(data == 0){
+											alert("Nenhum veiculo do Tipo: "+tipo);
+										}
+										else{
+											alert(JSON.stringify(data));
+										}
+										console.log(data);
+								}
+						});
+				});
+		});
+
+</script>
+</head>
+<body>
+<p>LISTA TIPO VEICULO</p>
+
+<p>Tipo : &nbsp; &nbsp; &nbsp;&nbsp;<input id="ls_tipo" maxlength="10" name="Tipo" size="10" type="text" /></p>
+
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<input id="listatipoveiculo" name="Tipo" type="button" value="Lista Tipo" /></p>
+<p>&nbsp;</p>
+<a href="../index.html">Retornar ao Menu</a>
+</body>
+</html>

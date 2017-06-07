@@ -5,23 +5,22 @@
  */
 package WS;
 
-import Banco.Conexao;
 import Banco.Operacoes;
 import Entidades.Posicao;
 import Entidades.Veiculo;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
-import javax.jms.Message;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
-import static javax.ws.rs.HttpMethod.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.POST;
@@ -51,80 +50,149 @@ public class WSResouce {
      * @param codigo
      * @return an instance of java.lang.String
      */
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("getVeiculo/{codigo}")
-    public String getVeiculo(@PathParam("codigo") Integer codigo) throws SQLException {
-        Veiculo v = new Veiculo();
-        //v.setCodigo(codigo);
-        //Operacoes cx = new Operacoes();
-        v = Operacoes.consultaVeiculo(codigo);
-        Gson g = new Gson();
-        return g.toJson(v);
-//TODO return proper representation object
-        //throw new UnsupportedOperationException();   
+    
+    private Date getDataHora(){
+        return new Date();
     }
+     
+    @POST
+    @Path("/adicionaveiculo")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String adicionaVeiculo(String parVeiculo) {
+        JSONObject parJsonVeiculo = new JSONObject(parVeiculo);
+        Veiculo v = new Veiculo();        
+        v.setCodigo(Integer.parseInt((String) parJsonVeiculo.get("codigo")));
+        v.setPlaca(parJsonVeiculo.get("placa").toString());
+        v.setTipo(Integer.parseInt((String) parJsonVeiculo.get("tipo")));
+        v.setCapacidade(Integer.parseInt((String) parJsonVeiculo.get("capacidade")));
+        v.setUnpac(parJsonVeiculo.get("unpac").toString());
+        Gson r = new Gson();
+        
+        try {
+            Operacoes.adicionaVeiculo(v);
+            LOG.Logs.LogMessage(getDataHora()+" ServidorREST -> Adiciona Veiculo", "ServidorREST");
+            System.out.println(getDataHora()+" ServidorREST -> Adiciona Veiculo");
+            return r.toJson(1);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            LOG.Logs.LogMessage(getDataHora()+" ServidorREST -> SQLEXCPETION Adiciona veiculo-> "+ex.getMessage(), "ServidorREST");
+            return r.toJson(0);
+        }
+    }
+    
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/alteraveiculo")
+    public String alteraVeiculo(String parVeiculo) {
+        JSONObject parJsonVeiculo = new JSONObject(parVeiculo);
+        Gson r = new Gson();
+        Veiculo v = new Veiculo();        
+        
+        try {
+        v.setCodigo(Integer.parseInt((String) parJsonVeiculo.get("codigo")));
+            Operacoes.consultaVeiculo(v.getCodigo());
+            
+        v.setPlaca(parJsonVeiculo.get("placa").toString());
+        v.setTipo(Integer.parseInt((String) parJsonVeiculo.get("tipo")));
+        v.setCapacidade(Integer.parseInt((String) parJsonVeiculo.get("capacidade")));
+        v.setUnpac(parJsonVeiculo.get("unpac").toString());
+            Operacoes.alteraVeiculo(v);
+            LOG.Logs.LogMessage(getDataHora()+" ServidorREST -> Altera Veiculo", "ServidorREST");
+            System.out.println(getDataHora()+" ServidorREST -> Altera Veiculo");
+            return r.toJson(1);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            LOG.Logs.LogMessage(getDataHora()+" ServidorREST -> SQLEXCPETION Altera veiculo-> "+ex.getMessage(), "ServidorREST");
+            return r.toJson(0);
+        }
+    }
+    
+    @DELETE
+    @Path("deleteveiculo/{codigo}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String deleteVeiculo(@PathParam("codigo") Integer codigo) {
+        
+        Gson r = new Gson();
+        try {
+            Operacoes.consultaVeiculo(codigo);
+            Operacoes.deletaVeiculo(codigo);
+            
+            LOG.Logs.LogMessage(getDataHora()+" ServidorREST -> Deleta Veiculo", "ServidorREST");
+            System.out.println(getDataHora()+" ServidorREST -> Deleta Veiculo");
+            return r.toJson(1);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            LOG.Logs.LogMessage(getDataHora()+" ServidorREST -> SQLEXCPETION Deleta veiculo-> "+ex.getMessage(), "ServidorREST");
+            return r.toJson(0);
+        }
+    }
+    
+    
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("getListTypeVeiculo/{tipo}")
-    public String listTipoVeiculo(@PathParam("tipo") Integer tipo) throws SQLException {
-         List<Veiculo> lista = new ArrayList();
-        lista = Operacoes.listaTipo(tipo);
+    @Path("consultaveiculo/{codigo}")
+    public String ConsultaVeiculo(@PathParam("codigo") Integer codigo) {
         Gson g = new Gson();
-        return g.toJson(lista);
+        try {
+            LOG.Logs.LogMessage(getDataHora()+" ServidorREST -> Consulta Veiculo", "ServidorREST");
+            System.out.println(getDataHora()+" ServidorREST -> Consulta Veiculo");
+            return g.toJson(Operacoes.consultaVeiculo(codigo));
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            LOG.Logs.LogMessage(getDataHora()+" ServidorREST -> SQLEXCPETION Consulta veiculo-> "+ex.getMessage(), "ServidorREST");
+            return g.toJson(0);
+        }
+    }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("listatipoveiculo/{tipo}")
+    public String listTipoVeiculo(@PathParam("tipo") Integer tipo) {
+        List<Veiculo> lista = new ArrayList();
+        Gson g = new Gson();
+        try {
+            lista = Operacoes.listaTipo(tipo);
+            LOG.Logs.LogMessage(getDataHora()+" ServidorREST -> Lista Tipo Veiculo", "ServidorREST");
+            System.out.println(getDataHora()+" ServidorREST -> Lista Tipo Veiculo");
+            return g.toJson(lista);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            LOG.Logs.LogMessage(getDataHora()+" ServidorREST -> SQLEXCPETION Lista Tipo veiculo-> "+ex.getMessage(), "ServidorREST");            
+            return null;
+        }
     } 
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("getListPosicao/{codigo}/{datahora}")
-     public String listTipoVeiculo(@PathParam("tipo") Integer tipo,@PathParam("datahora") Date datahora) throws SQLException {
-         List<Posicao> lista = new ArrayList();
-        lista = Operacoes.listaPosicaoVeiculo(tipo, datahora);
+    @Path("listaposicao/{codigo}/{datahora}")
+     public String listaPosicao(@PathParam("codigo") Integer codigo,@PathParam("datahora") String datahora) {
+         //DATAHORA = YYYY-MM-DD-HH-MM-SS or null
         Gson g = new Gson();
-        return g.toJson(lista);
+        Date data = null;
+         if(datahora.length() > 5){
+            String dtstring = new String(datahora.trim());
+            String[] parts = dtstring.split("-");
+            GregorianCalendar gc = new GregorianCalendar();
+            gc.set(Calendar.YEAR, Integer.parseInt(parts[0]));
+            gc.set(Calendar.MONTH, Integer.parseInt(parts[1])-1);
+            gc.set(Calendar.DAY_OF_MONTH, Integer.parseInt(parts[2]));
+            gc.set(Calendar.HOUR_OF_DAY, Integer.parseInt(parts[3]));
+            gc.set(Calendar.MINUTE, Integer.parseInt(parts[4]));
+            gc.set(Calendar.SECOND, Integer.parseInt(parts[5]));
+            data = gc.getTime();
+         }
+        try {
+            List<Posicao> lista = Operacoes.listaPosicaoVeiculo(codigo, data);
+            LOG.Logs.LogMessage(getDataHora()+" ServidorREST -> Lista Posicao Veiculo", "ServidorREST");
+            System.out.println(getDataHora()+" ServidorREST -> Lista Posicao Veiculo");
+            return g.toJson(lista);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            LOG.Logs.LogMessage(getDataHora()+" ServidorREST -> SQLEXCPETION Lista Posicao veiculo-> "+ex.getMessage(), "ServidorREST");
+            return null;
+        }
     }
-     
-    //@POST
-    //@Consumes(MediaType.APPLICATION_JSON)
-    //@Produces(MediaType.APPLICATION_JSON)
-    //@Path("postVeiculo")
-    //public String adicionaVeiculo(Gson paramJsonVeiculo) throws Exception{  
-     //   Gson JsonVeiculo = new Gson();
-    //     System.out.println(JsonVeiculo);
-    //    JsonVeiculo.toJson(paramJsonVeiculo);
-    //return JsonVeiculo.toString();
-    //public String adicionaVeiculo(@PathParam("tipo") Integer codigo, String placa, Integer tipo, Integer capacidade, String unpac ) throws SQLException {
-        //Veiculo v = new Veiculo();
-        //v = Operacoes.consultaVeiculo(codigo);
-     //se veiculo encontrado gera msg que não será incluido pq já existe, se não inclui veiculo
-        //v = new Veiculo(codigo, placa, tipo, capacidade, unpac); 
-        //Operacoes.adicionaVeiculo(v);
-        //Gson g = new Gson();
-        //return g.toJson("Veiculo Alterado");
-    //}
-    //}
-    @POST
-    @Path("/postVeiculo")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public String postJson(String parVeiculo) throws Exception {
-        JSONObject parJsonVeiculo = new JSONObject(parVeiculo);
-        Veiculo v = new Veiculo();        
-        v.setCodigo((Integer) parJsonVeiculo.get("codigo"));
-        v.setPlaca(parJsonVeiculo.get("placa").toString());
-        v.setTipo((Integer) parJsonVeiculo.get("tipo"));
-        v.setCapacidade((Integer) parJsonVeiculo.get("capacidade"));
-        v.setUnpac(parJsonVeiculo.get("unpac").toString());
-        Operacoes.beginReplica();
-        Operacoes.adicionaVeiculo(v);
-        Operacoes.endReplica();
-       Gson r = new Gson();
-        return r.toJson(v.getCapacidade());
-    }
-     
-     
-    @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void putJson(String content) {
-    }
+    
 }

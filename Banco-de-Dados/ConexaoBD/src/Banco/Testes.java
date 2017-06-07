@@ -85,10 +85,10 @@ public class Testes extends Operacoes{
             Veiculo veiculo = new Veiculo();
             
             veiculo.setCodigo(400);
-            veiculo.setPlaca("ILH112");
+            veiculo.setPlaca("ILH");
             veiculo.setTipo(4);
             veiculo.setCapacidade(1);
-            veiculo.setUnpac("unpac");
+            veiculo.setUnpac("unp");
 
             System.out.println("Agora vai Alterar!!");
             

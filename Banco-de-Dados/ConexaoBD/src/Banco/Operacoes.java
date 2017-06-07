@@ -41,24 +41,22 @@ public class Operacoes {
     
     // Método que adiciona um veículo
     public static void adicionaVeiculo(Veiculo veiculo) throws SQLException {
-            String sql = "insert into veiculo (codigo, placa, tipo, capacidade, unpac) values (?, ?, ?, ?, ?)";
-            PreparedStatement stmt = Conexao.getPreparedStatement(sql);
-            stmt.setInt(1, veiculo.getCodigo());
-            stmt.setString(2, veiculo.getPlaca());
-            stmt.setInt(3, veiculo.getTipo());
-            stmt.setInt(4, veiculo.getCapacidade());
-            stmt.setString(5, veiculo.getUnpac());
-            stmt.executeUpdate();
+        String sql = "insert into veiculo (codigo, placa, tipo, capacidade, unpac) values (?, ?, ?, ?, ?)";
+        PreparedStatement stmt = Conexao.getPreparedStatement(sql);
+        stmt.setInt(1, veiculo.getCodigo());
+        stmt.setString(2, veiculo.getPlaca());
+        stmt.setInt(3, veiculo.getTipo());
+        stmt.setInt(4, veiculo.getCapacidade());
+        stmt.setString(5, veiculo.getUnpac());
+        stmt.executeUpdate();
     }
     
     // Método que exclui um veículo
     public static void deletaVeiculo(Integer codigo) throws SQLException {
-        
         String sql = "delete from veiculo where codigo = ?";
         PreparedStatement stmt = Conexao.getPreparedStatement(sql);
         stmt.setInt(1, codigo);
         stmt.executeUpdate();
-
     }
     
      // Método que altera um veículo
@@ -118,7 +116,6 @@ public class Operacoes {
       
     //Método que adiciona uma posição
     public static void adicionaPosicao(Posicao posicao) throws SQLException {
-
        String sql = "insert into posicao (codigo, datahora, latitude, longitude) values (?, ?, ?, ?)";
        PreparedStatement stmt = Conexao.getPreparedStatement(sql);
        stmt.setInt(1, posicao.getVeiculo().getCodigo());
@@ -129,7 +126,6 @@ public class Operacoes {
        stmt.setFloat(3, posicao.getLatitude());
        stmt.setFloat(4, posicao.getLongitude());
        stmt.executeUpdate();
-        
     }
     
     // Método que retorna as posições de um veículo
@@ -162,7 +158,7 @@ public class Operacoes {
           posicao.setVeiculo(veiculo);
           posicao.setDatahora(rs.getTimestamp("datahora"));
           posicao.setLatitude(rs.getFloat("latitude"));
-          posicao.setLatitude(rs.getFloat("longitude"));
+          posicao.setLongitude(rs.getFloat("longitude"));
 
           lista.add(posicao);
       }

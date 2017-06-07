@@ -5,16 +5,12 @@
  */
 package servidor.simulador.udp;
 
-import Banco.Operacoes;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
-import java.sql.SQLException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -41,7 +37,6 @@ public class ServidorSimuladorUDP {
         DatagramSocket aSocket = null;
         
         try {
-            Operacoes.beginReplica();
             
             aSocket = new DatagramSocket(serverPort);
             
@@ -55,11 +50,11 @@ public class ServidorSimuladorUDP {
             }
                            
         } catch (SocketException se){
-            se.getMessage();
+            System.out.println(se.getMessage());
             LOG.Logs.LogMessage(se.getMessage(), s);
         } 
-        catch (IOException | SQLException ex) {
-            Logger.getLogger(ServidorSimuladorUDP.class.getName()).log(Level.SEVERE, null, ex);
+        catch (IOException ex) {
+            System.out.println(ex.getMessage());
             LOG.Logs.LogMessage(ex.getMessage(), s);
         }
        

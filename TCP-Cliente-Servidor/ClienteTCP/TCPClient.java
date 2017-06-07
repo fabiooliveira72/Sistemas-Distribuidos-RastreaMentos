@@ -3,8 +3,9 @@ package br.com.tcp;
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -96,11 +97,43 @@ public class TCPClient {
 				break;
 			case 6:
 				System.out.println("Digite o código do veículo para checagem de todas as localizações:");
-				outToServer.writeInt(opc);
-				outToServer.writeInt(keyb.nextInt());
+				outToServer.writeObject(keyb.nextInt());
+				List<Posicao> posicoes = new ArrayList<>();
+				posicoes = (List<Posicao>)inFromServer.readObject();
+				for (Posicao pos : posicoes)
+				{
+					System.out.println("Data: " + pos.getDatahora() +
+										"Latitude: " + pos.getLatitude() +
+										"Longitude: " + pos.getLongitude());
+				}
 				clientSocket.close();
 				break;
 			case 7:
+				System.out.println("Digite primeiramente o código do veículo:");
+				outToServer.writeObject(keyb.nextInt());
+				System.out.println("Digite o ano (AAAA):");
+				int ano = keyb.nextInt();
+				System.out.println("Digite o mês (MM):");
+				int mes = keyb.nextInt();
+				System.out.println("Digite o dia (DD)");
+				int dia = keyb.nextInt();
+				System.out.println("Digite a hora (HH):");
+				int hora = keyb.nextInt();
+				System.out.println("Digite os minutos (MM):");
+				int min = keyb.nextInt();
+				Calendar cal = Calendar.getInstance();
+				cal.set(ano, mes, dia, hora, min);
+				Date d = cal.getTime();
+				outToServer.writeObject(d);
+				List<Posicao> posicoes2 = new ArrayList<>();
+				posicoes = (List<Posicao>)inFromServer.readObject();
+				for (Posicao pos : posicoes2)
+				{
+					System.out.println("Data: " + pos.getDatahora() +
+										"Latitude: " + pos.getLatitude() +
+										"Longitude: " + pos.getLongitude());
+				}
+				
 				break;
 			default:
 				clientSocket.close();

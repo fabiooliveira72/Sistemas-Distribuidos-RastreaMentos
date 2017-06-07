@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+	<title>LISTA POSICAO VEICULO</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+<script>
+
+		$(document).ready(function(){
+					$('#listaposicao').click(function(){
+
+							var codigo = $('#ls_codigo').val();
+							var datahora = 'null';
+							if($('#ls_ano').val() != ''){
+									datahora = $('#ls_ano').val()+"-"+$('#ls_mes').val()+"-"+$('#ls_dia').val()+"-"+$('#ls_hora').val()+"-"+$('#ls_minuto').val()+"-"+$('#ls_segundo').val();
+							}
+
+							$.ajax({
+									type:'GET',
+									url:'http://34.211.122.0:8080/ServREST/webresources/WSRRastreamento/listaposicao/'+codigo+'/'+datahora,
+									contentType: "application/json; charset=utf-8",
+									dataType: "json",
+									success:function(data){
+											if(data == 0 || data == undefined){
+												alert("Nenhuma localizacao do Veiculo: "+codigo);
+											}
+											else{
+												document.getElementById("datalist").innerHTML = "";
+											  for (var i = 0; i < data.length; i++)
+											  {
+											       datalist = "<li> Codigo: "+ data[i].veiculo.codigo + " Data/Hora: "+ data[i].datahora +" Lat: "+ data[i].latitude+" Lng: "+data[i].longitude+"</li>";
+											       document.getElementById("datalist").innerHTML += datalist;
+											  }
+											}
+											console.log(data);
+									}
+							});
+					});
+			});
+
+</script>
+</head>
+<body>
+<p>LISTA POSICAO VEICULO</p>
+
+<p>Codigo : &nbsp; &nbsp; &nbsp;&nbsp;<input id="ls_codigo" maxlength="10" name="codigo" size="10" type="text" /></p>
+
+<p>ANO: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<input id="ls_ano" maxlength="4" name="ano" size="5" type="text" /></p>
+
+<p>MES: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<input id="ls_mes" maxlength="2" name="mes" size="5" type="text" /></p>
+
+<p>DIA: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<input id="ls_dia" maxlength="2" name="dia" size="5" type="text" /></p>
+
+<p>HORA: &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<input id="ls_hora" maxlength="2" name="hora" size="5" type="text" /></p>
+
+<p>MINUTO: &nbsp; &nbsp;<input id="ls_minuto" maxlength="2" name="minuto" size="5" type="text" /></p>
+
+<p>SEGUNDO:&nbsp;<input id="ls_segundo" maxlength="2" name="segundo" size="5" type="text" /></p>
+
+<p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<input id="listaposicao" name="listaposicao" type="button" value="Lista Posicao" /></p>
+<p>&nbsp;</p>
+<div id="datalist"></div>
+<p>&nbsp;</p>
+<a href="../index.html">Retornar ao Menu</a>
+</body>
+</html>

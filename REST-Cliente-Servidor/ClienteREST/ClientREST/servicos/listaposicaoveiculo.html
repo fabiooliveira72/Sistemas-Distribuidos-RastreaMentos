@@ -21,11 +21,16 @@
 									contentType: "application/json; charset=utf-8",
 									dataType: "json",
 									success:function(data){
-											if(data == 0){
+											if(data == 0 || data == undefined){
 												alert("Nenhuma localizacao do Veiculo: "+codigo);
 											}
 											else{
-												alert(JSON.stringify(data));
+												document.getElementById("datalist").innerHTML = "";
+											  for (var i = 0; i < data.length; i++)
+											  {
+											       datalist = "<li> Codigo: "+ data[i].veiculo.codigo + " Data/Hora: "+ data[i].datahora +" Lat: "+ data[i].latitude+" Lng: "+data[i].longitude+"</li>";
+											       document.getElementById("datalist").innerHTML += datalist;
+											  }
 											}
 											console.log(data);
 									}
@@ -53,6 +58,8 @@
 <p>SEGUNDO:&nbsp;<input id="ls_segundo" maxlength="2" name="segundo" size="5" type="text" /></p>
 
 <p>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<input id="listaposicao" name="listaposicao" type="button" value="Lista Posicao" /></p>
+<p>&nbsp;</p>
+<div id="datalist"></div>
 <p>&nbsp;</p>
 <a href="../index.html">Retornar ao Menu</a>
 </body>

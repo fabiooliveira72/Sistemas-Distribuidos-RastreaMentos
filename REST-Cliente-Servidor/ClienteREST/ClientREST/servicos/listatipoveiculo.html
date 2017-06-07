@@ -17,11 +17,16 @@
 								contentType: "application/json; charset=utf-8",
 								dataType: "json",
 								success:function(data){
-										if(data == 0){
+										if(data == 0 || data == undefined){
 											alert("Nenhum veiculo do Tipo: "+tipo);
 										}
 										else{
-											alert(JSON.stringify(data));
+											document.getElementById("datalist").innerHTML = "";
+											for (var i = 0; i < data.length; i++)
+											{
+													 datalist = "<li> Codigo: "+ data[i].codigo + " Placa: "+ data[i].placa +" Tipo: "+ data[i].tipo+" Capacidade: "+data[i].capacidade+" Unpac: "+data[i].unpac+"</li>";
+													 document.getElementById("datalist").innerHTML += datalist;
+											}
 										}
 										console.log(data);
 								}
@@ -37,6 +42,8 @@
 <p>Tipo : &nbsp; &nbsp; &nbsp;&nbsp;<input id="ls_tipo" maxlength="10" name="Tipo" size="10" type="text" /></p>
 
 <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<input id="listatipoveiculo" name="Tipo" type="button" value="Lista Tipo" /></p>
+<p>&nbsp;</p>
+<div id="datalist"></div>
 <p>&nbsp;</p>
 <a href="../index.html">Retornar ao Menu</a>
 </body>

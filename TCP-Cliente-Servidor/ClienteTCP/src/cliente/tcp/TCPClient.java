@@ -4,10 +4,7 @@ import Entidades.Posicao;
 import Entidades.Veiculo;
 import java.io.*;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -34,7 +31,7 @@ public class TCPClient {
 		do
 		{
 			
-			System.out.println("Digite a operação que desjea realizar:");
+			System.out.println("Digite a operação que deseja realizar:");
 			System.out.println("1-Adicionar");
 			System.out.println("2-Alterar");
 			System.out.println("3-Excluir");
@@ -43,7 +40,7 @@ public class TCPClient {
 			System.out.println("6-Localização dos Veiculos");
 			System.out.println("0-Sair");
 			
-			Socket clientSocket = new Socket("localhost", 2010);
+			Socket clientSocket = new Socket("34.211.122.0", 2010);
 			ObjectOutputStream outToServer = new ObjectOutputStream(clientSocket.getOutputStream());
 			ObjectInputStream inFromServer = new ObjectInputStream(clientSocket.getInputStream());
 			

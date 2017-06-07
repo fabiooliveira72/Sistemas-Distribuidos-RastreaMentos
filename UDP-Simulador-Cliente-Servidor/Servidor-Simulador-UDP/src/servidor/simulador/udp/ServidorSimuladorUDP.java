@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
+import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -27,14 +28,17 @@ public class ServidorSimuladorUDP {
         // TODO code application logic here
         Integer time = Integer.parseInt(args[0]);
         Integer interval = Integer.parseInt(args[1]);
-        Integer maxTimeWait = (time*interval)*1000;
+        Integer maxTimeWait = (time*(interval+1))*1000;
         String s = "ServidorSimuladorUDP";
         
-        ThreadCheckTime checkTime = new ThreadCheckTime(maxTimeWait);
+        ThreadCheckTime checkTime = new ThreadCheckTime(time, interval, maxTimeWait);
         checkTime.start();
         
         Integer serverPort = 2006;
         DatagramSocket aSocket = null;
+        
+        System.out.println("SERVIDOR SIMULADOR UDP - started at : "+new Date());
+        LOG.Logs.LogMessage("SERVIDOR SIMULADOR UDP - started at : "+new Date(), s);
         
         try {
             

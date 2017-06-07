@@ -5,7 +5,6 @@ package br.com.tcp;
 import Banco.Operacoes;
 import Entidades.Posicao;
 import Entidades.Veiculo;
-import java.io.IOException;
 //import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -16,14 +15,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.FileHandler;
-//import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 
 public class TCPServer {
-	private static final Logger logger = Logger.getLogger(TCPServer.class.getName());
-	static FileHandler fh;
 	// TODO Auto-generated method stub
 	public static void main(String argv[]) throws Exception {
 //		String clientSentence;
@@ -35,27 +28,8 @@ public class TCPServer {
 		List<Posicao> posicoes;
 		Date d;
 
-//		Operacoes.beginReplica();
-		
-		try {  
-
-	        // This block configure the logger with handler and formatter  
-	        fh = new FileHandler("/home/oliveira/MyLogFile.log");  
-	        logger.addHandler(fh);
-	        SimpleFormatter formatter = new SimpleFormatter();  
-	        fh.setFormatter(formatter);  
-
-	        // the following statement is used to log any messages  
-//	        logger.info("My first log");  
-	        
-	        logger.info("Sistema iniciado em: " + new Date());
-
-	    } catch (SecurityException e) {  
-	        e.printStackTrace();  
-	    } catch (IOException e) {  
-	        e.printStackTrace();  
-	    }  
-		
+	        System.out.println("Sistema iniciado em: " + new Date());
+	        LOG.Logs.LogMessage("Sistema iniciado em: " + new Date(), "ServidorTCP");
         
 		while (true) {
 			Socket connectionSocket = welcomeSocket.accept();
@@ -66,22 +40,20 @@ public class TCPServer {
 //			DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
 			
 			int opc = (Integer)inFromClient.readObject();
-			System.out.println("Opcção selecionada:" + opc);
+			System.out.println("Opcao selecionada:" + opc);
 			switch (opc) {
 			case 1: // adiciona
 				veiculo = (Veiculo)inFromClient.readObject();
 				try {
 					Operacoes.adicionaVeiculo(veiculo);
-					System.out.println("To adicionando veículo");
-					logger.info(connectionSocket.getInetAddress() + " adicionou veículo com código: " + veiculo.getCodigo() + " na base de dados.");
-					outToClient.writeObject("Veículo adicionado com sucesso!");
+					System.out.println(connectionSocket.getInetAddress() + " adicionou veiculo com codigo: " + veiculo.getCodigo() + " na base de dados.");
+                                        LOG.Logs.LogMessage(connectionSocket.getInetAddress() + " adicionou veiculo com codigo: " + veiculo.getCodigo() + " na base de dados.", "ServidorTCP");
+					outToClient.writeObject("Veiculo adicionado com sucesso!");
 				} catch (SQLException e) {
 					// TODO: handle exception
-					e.printStackTrace();
-					System.out.println("Não deu pra adicionar veículo");
-					logger.info(connectionSocket.getInetAddress() + " tentou adicionar veículo já existente. Msg SQLException:"
-							+ e.getMessage());
-					outToClient.writeObject("Veículo informado já existe.");
+					System.out.println(connectionSocket.getInetAddress() + " tentou adicionar veiculo ja existente. Msg SQLException:"+ e.getMessage());
+                                        LOG.Logs.LogMessage(connectionSocket.getInetAddress() + " tentou adicionar veiculo ja existente. Msg SQLException:"+ e.getMessage(), "ServidorTCP");
+					outToClient.writeObject("Veiculo informado ja existe.");
 				}
 				break;
 			case 2: // altera
@@ -89,15 +61,14 @@ public class TCPServer {
 				try {
                                         Operacoes.consultaVeiculo(veiculo.getCodigo());
 					Operacoes.alteraVeiculo(veiculo);
-					System.out.println("To alterando veículo");
-					logger.info(connectionSocket.getInetAddress() + " alterou veículo com código: " + veiculo.getCodigo() + " na base de dados.");
-					outToClient.writeObject("Veículo alterado com sucesso!");
+					System.out.println(connectionSocket.getInetAddress() + " alterou veiculo com codigo: " + veiculo.getCodigo() + " na base de dados.");
+					LOG.Logs.LogMessage(connectionSocket.getInetAddress() + " alterou veiculo com codigo: " + veiculo.getCodigo() + " na base de dados.", "ServidorTCP");
+					outToClient.writeObject("Veiculo alterado com sucesso!");
 				} catch (SQLException e) {
 					// TODO: handle exception
-					e.printStackTrace();
-					logger.info(connectionSocket.getInetAddress() + " tentou alterar veículo não existente. Msg SQLException:"
-							+ e.getMessage());
-					outToClient.writeObject("Veículo informado não existe.");
+                                        System.out.println(connectionSocket.getInetAddress() + " tentou alterar veiculo nao existente. Msg SQLException:"+ e.getMessage());
+					LOG.Logs.LogMessage(connectionSocket.getInetAddress() + " tentou alterar veiculo nao existente. Msg SQLException:"+ e.getMessage(), "ServidorTCP");
+					outToClient.writeObject("Veículo informado nao existe.");
 				}
 				break;
 			case 3: // deleta
@@ -105,31 +76,29 @@ public class TCPServer {
 				try {
                                         Operacoes.consultaVeiculo(codigo);
 					Operacoes.deletaVeiculo(codigo);
-					System.out.println("To deletando veículo");
-					logger.info(connectionSocket.getInetAddress() + " deletou veículo com código: " + codigo + " na base de dados.");
-					outToClient.writeObject("Veículo excluído com sucesso!");
+					System.out.println(connectionSocket.getInetAddress() + " deletou veiculo com codigo: " + codigo + " na base de dados.");
+					LOG.Logs.LogMessage(connectionSocket.getInetAddress() + " deletou veiculo com codigo: " + codigo + " na base de dados.", "ServidorTCP");
+					outToClient.writeObject("Veiculo excluido com sucesso!");
 				} catch (Exception e) {
 					// TODO: handle exception
-					e.printStackTrace();
-					logger.info(connectionSocket.getInetAddress() + " tentou deletar veículo não existente. Msg SQLException:"
-							+ e.getMessage());
-					outToClient.writeObject("Veículo informado não existe.");
+                                        System.out.println(connectionSocket.getInetAddress() + " tentou deletar veiculo nao existente. Msg SQLException:"+ e.getMessage());
+					LOG.Logs.LogMessage(connectionSocket.getInetAddress() + " tentou deletar veiculo nao existente. Msg SQLException:"+ e.getMessage(), "ServidorTCP");
+					outToClient.writeObject("Veiculo informado nao existe.");
 				}
 				break;
 			case 4: // consulta 
 				codigo = (Integer)inFromClient.readObject();
 				try {
 					veiculo = Operacoes.consultaVeiculo(codigo);
-					System.out.println("Consultando veículo");
-					logger.info(connectionSocket.getInetAddress() + " consultou veículo com código:" +veiculo.getCodigo() + " na base de dados.");
-					outToClient.writeObject("Código: " + veiculo.getCodigo() + " Placa: " + veiculo.getPlaca() + " Tipo: " + veiculo.getTipo()
+					System.out.println(connectionSocket.getInetAddress() + " consultou veiculo com codigo:" +veiculo.getCodigo() + " na base de dados.");
+					LOG.Logs.LogMessage(connectionSocket.getInetAddress() + " consultou veiculo com codigo:" +veiculo.getCodigo() + " na base de dados.", "ServidorTCP");
+					outToClient.writeObject("Codigo: " + veiculo.getCodigo() + " Placa: " + veiculo.getPlaca() + " Tipo: " + veiculo.getTipo()
 					+ " Capacidade: " + veiculo.getCapacidade() + " Unpac: " + veiculo.getUnpac());
 				} catch (Exception e) {
 					// TODO: handle exception
-					e.printStackTrace();
-					logger.info(connectionSocket.getInetAddress() + " tentou consultar veículo não existente. Msg SQLException:"
-							+ e.getMessage());
-					outToClient.writeObject("Veículo informado não existe.");
+                                        System.out.println(connectionSocket.getInetAddress() + " tentou consultar veiculo nao existente. Msg SQLException:"+ e.getMessage());
+					LOG.Logs.LogMessage(connectionSocket.getInetAddress() + " tentou consultar veiculo nao existente. Msg SQLException:"+ e.getMessage(), "ServidorTCP");
+					outToClient.writeObject("Veiculo informado nao existe.");
 				}
 				break;
 			case 5: // lista tipo
@@ -137,30 +106,35 @@ public class TCPServer {
 				List<Veiculo> veiculos = new ArrayList<>();
 				int tipo = (Integer)inFromClient.readObject(); // salvo o tipo numa variável para salvar no log
 				veiculos = Operacoes.listaTipo(tipo);
-				outToClient.writeObject("Lista com veículos do tipo: " + tipo);
+				outToClient.writeObject("Lista com veiculos do tipo: " + tipo);
 				outToClient.writeObject(veiculos);
-				logger.info("Cliente com ip: " + connectionSocket.getInetAddress() + " listou veículos do tipo: " + tipo);
+				LOG.Logs.LogMessage("Cliente com ip: " + connectionSocket.getInetAddress() + " listou veiculos do tipo: " + tipo, "ServidorTCP");
 				break;
 			case 6:
-        			System.out.println("To mostrando todas as localizações!");
+        			System.out.println("Entrei na listagem de localizacoes!");
 				codigo = (Integer)inFromClient.readObject();
 				String dtstr = (String) inFromClient.readObject();
                                 Date dt = null;
                                 if(!dtstr.isEmpty()){
                                     String[] part = dtstr.split("-");
                                     Calendar cal = Calendar.getInstance();
-                                    cal.set(Integer.parseInt(part[0]), Integer.parseInt(part[1])-1, Integer.parseInt(part[2]), 
-                                            Integer.parseInt(part[3]), Integer.parseInt(part[4]), Integer.parseInt(part[5]));
+                                    cal.set(Calendar.YEAR, Integer.parseInt(part[0]));
+                                    cal.set(Calendar.MONTH, Integer.parseInt(part[1])-1);
+                                    cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(part[2]));
+                                    cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(part[3]));
+                                    cal.set(Calendar.MINUTE, Integer.parseInt(part[4]));
+                                    cal.set(Calendar.SECOND, Integer.parseInt(part[5]));
+
                                     dt = cal.getTime();
                                 }
 				posicoes = new ArrayList<>();
 				posicoes = Operacoes.listaPosicaoVeiculo(codigo, dt);
 				outToClient.writeObject(posicoes);
-				logger.info("Cliente com ip: " + connectionSocket.getInetAddress() + " listou as posições do veículo: " + codigo);
+				LOG.Logs.LogMessage("Cliente com ip: " + connectionSocket.getInetAddress() + " listou as posicoes do veiculo: " + codigo, "ServidorTCP");
 				break;
 			case 0:
-				System.out.println("Conexão encerrada!");
-				logger.info("Cliente com ip: " + connectionSocket.getInetAddress() + " encerrou a conexão!" );
+				System.out.println("Cliente com ip: " + connectionSocket.getInetAddress() + " encerrou a conexao!");
+				LOG.Logs.LogMessage("Cliente com ip: " + connectionSocket.getInetAddress() + " encerrou a conexao!", "ServidorTCP");
 				break;
 			default:
 				break;

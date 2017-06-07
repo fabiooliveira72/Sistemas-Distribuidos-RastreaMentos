@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.2-hudson-740-. --><xs:schema xmlns:tns="http://soap.ws/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://soap.ws/">
+
+<xs:element name="adicionaVeiculo" type="tns:adicionaVeiculo" />
+
+<xs:element name="adicionaVeiculoResponse" type="tns:adicionaVeiculoResponse" />
+
+<xs:element name="alteraVeiculo" type="tns:alteraVeiculo" />
+
+<xs:element name="alteraVeiculoResponse" type="tns:alteraVeiculoResponse" />
+
+<xs:element name="consultaVeiculo" type="tns:consultaVeiculo" />
+
+<xs:element name="consultaVeiculoResponse" type="tns:consultaVeiculoResponse" />
+
+<xs:element name="deletaVeiculo" type="tns:deletaVeiculo" />
+
+<xs:element name="deletaVeiculoResponse" type="tns:deletaVeiculoResponse" />
+
+<xs:element name="listaPosicaoVeiculo" type="tns:listaPosicaoVeiculo" />
+
+<xs:element name="listaPosicaoVeiculoResponse" type="tns:listaPosicaoVeiculoResponse" />
+
+<xs:element name="listaTipo" type="tns:listaTipo" />
+
+<xs:element name="listaTipoResponse" type="tns:listaTipoResponse" />
+
+<xs:complexType name="listaPosicaoVeiculo">
+<xs:sequence>
+<xs:element name="codigo" type="xs:int" />
+<xs:element name="datahora" type="xs:dateTime" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="listaPosicaoVeiculoResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:posicao" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="posicao">
+<xs:sequence>
+<xs:element name="datahora" type="xs:dateTime" minOccurs="0" />
+<xs:element name="latitude" type="xs:float" minOccurs="0" />
+<xs:element name="longitude" type="xs:float" minOccurs="0" />
+<xs:element name="veiculo" type="tns:veiculo" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="veiculo">
+<xs:sequence>
+<xs:element name="capacidade" type="xs:int" minOccurs="0" />
+<xs:element name="codigo" type="xs:int" minOccurs="0" />
+<xs:element name="placa" type="xs:string" minOccurs="0" />
+<xs:element name="tipo" type="xs:int" minOccurs="0" />
+<xs:element name="unpac" type="xs:string" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="deletaVeiculo">
+<xs:sequence>
+<xs:element name="codigo" type="xs:int" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="deletaVeiculoResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="alteraVeiculo">
+<xs:sequence>
+<xs:element name="veiculo" type="tns:veiculo" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="alteraVeiculoResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="listaTipo">
+<xs:sequence>
+<xs:element name="codigo" type="xs:int" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="listaTipoResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:veiculo" minOccurs="0" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="consultaVeiculo">
+<xs:sequence>
+<xs:element name="codigo" type="xs:int" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="consultaVeiculoResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:veiculo" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="adicionaVeiculo">
+<xs:sequence>
+<xs:element name="veiculo" type="tns:veiculo" minOccurs="0" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="adicionaVeiculoResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean" />
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

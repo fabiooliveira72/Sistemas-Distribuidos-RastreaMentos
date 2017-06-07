@@ -56,7 +56,7 @@ public class ThreadClientRequest extends Thread{
     public void run(){
         try {
             if(so.getDataHora().getTime() > gc.getTime().getTime()){
-                System.out.println("Vehicle Waiting");
+                System.out.println("Vehicle "+so.getCodigo()+" Waiting");
                 long twait = so.getDataHora().getTime() - gc.getTime().getTime();
                 sleep(twait);
             }

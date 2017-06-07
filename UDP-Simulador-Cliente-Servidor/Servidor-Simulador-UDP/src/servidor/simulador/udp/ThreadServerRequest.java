@@ -49,7 +49,6 @@ public class ThreadServerRequest extends Thread{
                 
             //LOG MESSAGE
                 String info = new Date().toString()+": Server UDP Receive request -> "+ so.toString() + " from-> "+clientPacket.getAddress()+ " port ->" + clientPacket.getPort();
-                System.out.println(info);
                 LOG.Logs.LogMessage(info, s);
                 
             //CHECKTIME

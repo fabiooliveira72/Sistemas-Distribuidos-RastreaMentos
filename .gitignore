@@ -5,3 +5,8 @@
 /LOG/Logs/build/
 /REST-Cliente-Servidor/ServidorREST/nbproject/private/
 /LOG/Logs/dist/
+/SOAP-Cliente-Servidor/ClienteSOAP/build/
+/SOAP-Cliente-Servidor/ClienteSOAP/dist/
+/REST-Cliente-Servidor/ServREST/build/
+/REST-Cliente-Servidor/ServREST/dist/
+/REST-Cliente-Servidor/ServREST/nbproject/private/

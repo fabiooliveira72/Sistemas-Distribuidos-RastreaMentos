@@ -1,5 +1,6 @@
 package sd.rastreamentos.gui;
 
+import java.util.ArrayList;
 import ws.soap.Posicao;
 import ws.soap.Veiculo;
 import java.util.Calendar;
@@ -809,7 +810,7 @@ public class InterfaceGráfica1 extends javax.swing.JFrame {
 
         if(!texto_cod_listarPosicao.getText().isEmpty()){
             Integer codigo = Integer.parseInt(texto_cod_listarPosicao.getText());
-            List<Posicao> ls = null;
+            List<Posicao> ls = new ArrayList<>();
 
             if(!texto_dia_listarPosicao.getText().isEmpty())
             {

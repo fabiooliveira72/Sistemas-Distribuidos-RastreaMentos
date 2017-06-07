@@ -31,7 +31,7 @@ public class ClienteSimuladorUDP {
         lsArgs.addAll(Arrays.asList(args));
         
         Integer serverPort = 2006;
-        String address = "localhost";
+        String address = "34.211.122.0";
         
         if(args.length%5 == 0){
             

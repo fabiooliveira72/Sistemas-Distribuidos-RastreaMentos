@@ -6,7 +6,6 @@
 package servidor.simulador.udp;
 
 import java.util.Date;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static servidor.simulador.udp.ServidorSimuladorUDP.connectedVehicle;
@@ -17,27 +16,49 @@ import static servidor.simulador.udp.ServidorSimuladorUDP.connectedVehicle;
  */
 public class ThreadCheckTime extends Thread{
     
-    Integer timewait;
+    Integer time, interval, maxTimeWait;
 
-    public ThreadCheckTime(Integer timewait) {
-        this.timewait = timewait;
+    public ThreadCheckTime(Integer time, Integer interval, Integer maxTimeWait) {
+        this.time = time*1000;
+        this.interval = interval;
+        this.maxTimeWait = maxTimeWait;
     }
     
     
     public void run(){
         Long currentTime;
-        Long interval;
-        while(true){
-            currentTime = System.currentTimeMillis();
-            for(Integer valor : connectedVehicle.keySet()){
-                
-                interval = (currentTime - connectedVehicle.get(valor));
-                if(interval > timewait){
-                    System.out.println("Veiculo codigo = "+ valor + " esta fora da area de cobertura");
-                    connectedVehicle.remove(valor);
+        Long timePast;
+        
+        try {
+            while(true){
+                currentTime = System.currentTimeMillis();
+                for(Integer valor : connectedVehicle.keySet()){
+
+                    timePast = (currentTime - connectedVehicle.get(valor));
+
+                    if(timePast <= time){
+                        String s = new Date()+" Veiculo codigo: "+valor+" STATUS: OK";
+                        System.out.println(s);
+                        LOG.Logs.LogMessage(s, "ServidorSimuladorUDP");
+                    } else if(timePast > time){
+                        if(timePast <= maxTimeWait){
+                            String s = new Date()+" Veiculo codigo: "+valor+" STATUS: Suspeito fora de cobertura";
+                            System.out.println(s);
+                            LOG.Logs.LogMessage(s, "ServidorSimuladorUDP");
+                        }
+                        else if(timePast > maxTimeWait){
+                            String s = new Date()+" Veiculo codigo: "+valor+" STATUS: Fora da area de cobertura";
+                            System.out.println(s);
+                            LOG.Logs.LogMessage(s, "ServidorSimuladorUDP");
+                        }
+
+                    }
+
                 }
-                
-            }
+            sleep(time);
+            } 
+        }catch (InterruptedException ex) {
+            LOG.Logs.LogMessage(ex.getMessage(), "ServidorSimuladorUDP");
         }
     }
 }
